@@ -11,6 +11,10 @@
 
 <img src="img\global_design.png" style="zoom:61%;" />
 
+### 主要功能
+
+![](img\htalker.png)
+
 ### 相关技术
 
 ![](img\technologies.png)

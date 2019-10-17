@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_gallery_select_max_size">至多选择%s张</string>
+</resources>

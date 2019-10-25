@@ -36,8 +36,8 @@ ext {
     butterknifeVersion = "10.2.0"
     geniusVersion = '2.0.0'
     glideVersion = '4.10.0'
-    circleimageviewVersion = '2.1.0'
-    ucropVersion = "2.2.0-native"
+    circleimageviewVersion = '3.0.1'
+    ucropVersion = '2.2.0'
     easyPMVersion = "0.3.0"
     ossVersion = '2.3.0'
 }

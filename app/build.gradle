@@ -42,4 +42,5 @@ dependencies {
     implementation "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
 
     api project(path: ':common')
+    implementation project(path: ':lang')
 }

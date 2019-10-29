@@ -8,7 +8,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hyd.common.R;
+import com.hyd.htalker.common.R;
 
 import java.util.ArrayList;
 import java.util.Collection;

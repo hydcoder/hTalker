@@ -9,7 +9,7 @@ import androidx.annotation.StringRes;
  */
 public class BaseContract {
 
-    interface View<T extends Presenter> {
+    public interface View<T extends Presenter> {
         // 公共的：显示一个字符串错误
         void showError(@StringRes int str);
 
@@ -20,7 +20,7 @@ public class BaseContract {
         void setPresenter(T presenter);
     }
 
-    interface Presenter {
+    public interface Presenter {
         // 共用的开始触发
         void start();
 

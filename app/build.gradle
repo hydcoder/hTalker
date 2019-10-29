@@ -10,6 +10,20 @@ android {
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //个推相关参数
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "D84oRwbUcd5PcBQf4VXMS4",
+                GETUI_APP_KEY   : "pYHMqXFUsd9H19DgGPymz5",
+                GETUI_APP_SECRET: "V7vbjRyr5F9DqZZOuN3Sq2",
+                PACKAGE_NAME    : applicationId
+        ]
+
+        //指定jdk版本
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
     buildTypes {
         release {
@@ -39,8 +53,10 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
     implementation "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
-    implementation "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
+    implementation "pub.devrel:easypermissions:$rootProject.ext.easyMVPersion"
 
-    api project(path: ':common')
-    implementation project(path: ':lang')
+    // 个推
+    implementation "com.getui:sdk:$rootProject.ext.getuiVersion"
+
+    api project(':factory')
 }

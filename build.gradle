@@ -3,9 +3,10 @@
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
         
     }
     dependencies {
@@ -20,9 +21,10 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        jcenter()
     }
 }
 
@@ -38,8 +40,13 @@ ext {
     glideVersion = '4.10.0'
     circleimageviewVersion = '3.0.1'
     ucropVersion = '2.2.0'
-    easyPMVersion = "0.3.0"
+    easyMVPersion = "1.0.1"
     ossVersion = '2.3.0'
+
+    gsonVersion = '2.8.0'
+    retrofitVersion = '2.1.0'
+    getuiVersion = '2.9.3.0'
+    dbflowVersion = "4.0.0-beta7"
 }
 
 task clean(type: Delete) {

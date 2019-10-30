@@ -8,9 +8,10 @@
 	tools:background="@drawable/bg_src_tianjin">
 
 
-	<androidx.coordinatorlayout.widget.CoordinatorLayout
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:orientation="vertical"
 		android:background="@drawable/bg_gradient_black"
 		android:paddingTop="@dimen/statusBarSize"
 		android:paddingBottom="@dimen/len_32">
@@ -22,24 +23,36 @@
 			android:layout_marginStart="0dp"
 			android:layout_marginTop="8dp"
 			android:layout_marginEnd="0dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
 			app:title="@string/label_update_info_tips"
 			app:titleTextAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-
-		<com.hyd.common.widget.PortraitView
-			android:id="@+id/im_portrait"
-			android:layout_width="@dimen/len_92"
-			android:layout_height="@dimen/len_92"
+		<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
 			android:layout_marginStart="0dp"
 			android:layout_marginTop="32dp"
 			android:layout_marginEnd="0dp"
-			android:src="@drawable/default_holder_add"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+			android:layout_gravity="center_horizontal">
+
+			<com.hyd.common.widget.PortraitView
+				android:id="@+id/im_portrait"
+				android:layout_width="@dimen/len_92"
+				android:layout_height="@dimen/len_92"
+				android:layout_gravity="center_horizontal"
+				android:src="@drawable/default_holder_add" />
+
+			<ImageView
+				android:id="@+id/im_sex"
+				android:layout_width="24dp"
+				android:layout_height="24dp"
+				android:layout_gravity="bottom|right"
+				android:background="@drawable/sel_bg_sex"
+				android:contentDescription="@string/app_name"
+				android:padding="5dp"
+				android:src="@drawable/ic_sex_man"
+				android:tint="@color/white"/>
+
+		</FrameLayout>
 
 		<TextView
 			android:id="@+id/textView"
@@ -51,28 +64,13 @@
 			android:text="@string/label_portrait_tips"
 			android:textAlignment="center"
 			android:textColor="@color/white"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/im_portrait" />
-
-		<ImageView
-			android:id="@+id/im_sex"
-			android:layout_width="24dp"
-			android:layout_height="24dp"
-			android:layout_marginEnd="6dp"
-			android:layout_marginBottom="4dp"
-			android:background="@drawable/sel_bg_sex"
-			android:contentDescription="@string/app_name"
-			android:padding="5dp"
-			android:src="@drawable/ic_sex_man"
-			android:tint="@color/white"
-			app:layout_constraintBottom_toBottomOf="@+id/im_portrait"
-			app:layout_constraintEnd_toEndOf="@+id/im_portrait" />
+			android:layout_gravity="center_horizontal" />
 
 		<net.qiujuer.genius.ui.widget.EditText
 			android:id="@+id/edit_desc"
-			android:layout_width="0dp"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
 			android:layout_marginStart="16dp"
 			android:layout_marginTop="16dp"
 			android:layout_marginEnd="16dp"
@@ -87,11 +85,8 @@
 			android:textSize="@dimen/font_16"
 			app:gHintTitle="none"
 			app:gLineColor="@color/white_alpha_160"
-			app:gLineSize="1dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/textView" />
-	</androidx.coordinatorlayout.widget.CoordinatorLayout >
+			app:gLineSize="1dp" />
+	</LinearLayout >
 
 	<Space
 		android:layout_width="0dp"

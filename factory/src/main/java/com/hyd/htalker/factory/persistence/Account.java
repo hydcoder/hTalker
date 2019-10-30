@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import com.hyd.htalker.factory.Factory;
 import com.hyd.htalker.factory.model.api.account.AccountRspModel;
 import com.hyd.htalker.factory.model.db.User;
+import com.hyd.htalker.factory.model.db.User_Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 /**
@@ -150,7 +151,7 @@ public class Account {
         // 如果为null返回一个new的User，其次从数据库查询
         return TextUtils.isEmpty(userId) ? new User() : SQLite.select()
                 .from(User.class)
-//  TODO              .where(User_Table.id.eq(userId))
+                .where(User_Table.id.eq(userId))
                 .querySingle();
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<item name="toolbar" type="id"/>
     <item name="default_portrait" type="drawable" />
 	<item name="tag_recycler_holder" type="id" />
 </resources>

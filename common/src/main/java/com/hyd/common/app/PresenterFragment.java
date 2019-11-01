@@ -31,12 +31,18 @@ public abstract class PresenterFragment<Presenter extends BaseContract.Presenter
     @Override
     public void showError(int str) {
         // 显示错误
-        BaseApplication.showToast(str);
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerError(str);
+        } else {
+            BaseApplication.showToast(str);
+        }
     }
 
     @Override
     public void showLoading() {
-        // TODO 显示一个Loading
+        if (mPlaceHolderView != null) {
+            mPlaceHolderView.triggerLoading();
+        }
     }
 
     @Override

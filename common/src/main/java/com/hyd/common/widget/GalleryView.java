@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by hydCoder on 2019/10/25.
@@ -261,7 +262,7 @@ public class GalleryView extends RecyclerView {
 
             Image image = (Image) o;
 
-            return path != null ? path.equals(image.path) : image.path == null;
+            return Objects.equals(path, image.path);
         }
 
         @Override

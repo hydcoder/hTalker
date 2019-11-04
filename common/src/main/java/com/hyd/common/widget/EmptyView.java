@@ -1,6 +1,5 @@
 package com.hyd.common.widget;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;

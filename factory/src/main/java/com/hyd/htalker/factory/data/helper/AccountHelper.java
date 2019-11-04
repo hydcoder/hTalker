@@ -89,7 +89,7 @@ public class AccountHelper {
             // 请求成功返回
             // 从返回中得到我们的全局Model，内部是使用的Gson进行解析
             RspModel<AccountRspModel> rspModel = response.body();
-            if (rspModel.success()) {
+            if (rspModel != null && rspModel.success()) {
                 // 拿到实体
                 AccountRspModel accountRspModel = rspModel.getResult();
                 // 获取我的信息

@@ -7,8 +7,11 @@ import com.hyd.htalker.factory.model.api.account.RegisterModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
 import com.hyd.htalker.factory.model.card.UserCard;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -49,4 +52,12 @@ public interface RemoteService {
     // 用户更新的接口
     @PUT("user")
     Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel model);
+
+    // 搜索用户的接口
+    @GET("user/search/{name}")
+    Call<RspModel<List<UserCard>>> searchUser(@Path("name") String name);
+
+    // 用户关注接口
+    @PUT("user/follow/{userId}")
+    Call<RspModel<UserCard>> followUser(@Path("userId") String userId);
 }

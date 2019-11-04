@@ -150,12 +150,12 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
      * @param dataList 一个新的集合
      */
     public void replaceData(Collection<Data> dataList) {
-        if (dataList == null || dataList.size() == 0) {
-            clear();
-        } else {
-            mDataList.addAll(dataList);
-            notifyDataSetChanged();
-        }
+        mDataList.clear();
+        if (dataList == null || dataList.size() == 0)
+            return;
+        mDataList.addAll(dataList);
+        notifyDataSetChanged();
+
     }
 
     /**
@@ -229,7 +229,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
     public static abstract class ViewHolder<Data> extends RecyclerView.ViewHolder {
 
         private Unbinder unbinder;
-        private Data mData;
+        protected Data mData;
         private AdapterCallBack<Data> mCallBack;
 
         public ViewHolder(@NonNull View itemView) {

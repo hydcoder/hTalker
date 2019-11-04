@@ -117,12 +117,27 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     @OnClick(R.id.im_search)
     void onSearchMenuClick() {
-
+        // 在群的界面的时候，点击顶部的搜索就进入群搜索界面
+        // 其他都为搜索用户的界面
+        int type;
+        if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
+            type = SearchActivity.TYPE_GROUP;
+        } else {
+            type = SearchActivity.TYPE_USER;
+        }
+        SearchActivity.show(this, type);
     }
 
     @OnClick(R.id.btn_action)
     void onActionClick() {
-        AccountActivity.show(this);
+        // 浮动按钮点击时，判断当前界面是群还是联系人界面
+        // 如果是群，则打开群创建的界面
+        if (Objects.equals(mNavHelper.getCurrentTab().extra, R.string.title_group)) {
+            // TODO 打开群创建界面
+        } else {
+            // 如果是其他，打开添加用户的界面
+            SearchActivity.show(this, SearchActivity.TYPE_USER);
+        }
     }
 
     /**

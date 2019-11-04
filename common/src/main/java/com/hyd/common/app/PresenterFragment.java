@@ -1,6 +1,5 @@
 package com.hyd.common.app;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.hyd.common.factory.presenter.BaseContract;

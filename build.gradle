@@ -3,11 +3,11 @@
 buildscript {
     repositories {
         google()
-        mavenCentral()
         maven { url "https://jitpack.io" }
+        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.1'
@@ -21,8 +21,8 @@ buildscript {
 allprojects {
     repositories {
         google()
-        mavenCentral()
         maven { url "https://jitpack.io" }
+        mavenCentral()
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         jcenter()
     }
@@ -46,7 +46,7 @@ ext {
     gsonVersion = '2.8.0'
     retrofitVersion = '2.1.0'
     getuiVersion = '2.9.3.0'
-    dbflowVersion = "4.0.0-beta7"
+    dbflowVersion = "4.2.4"
 }
 
 task clean(type: Delete) {

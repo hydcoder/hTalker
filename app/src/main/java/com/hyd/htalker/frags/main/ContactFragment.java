@@ -1,7 +1,6 @@
 package com.hyd.htalker.frags.main;
 
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -9,33 +8,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.hyd.common.app.BaseFragment;
+import com.hyd.common.app.PresenterFragment;
 import com.hyd.common.widget.EmptyView;
 import com.hyd.common.widget.PortraitView;
 import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
-import com.hyd.htalker.factory.model.card.UserCard;
+import com.hyd.htalker.activities.MessageActivity;
 import com.hyd.htalker.factory.model.db.User;
-import com.hyd.htalker.factory.presenter.contact.FollowContract;
-import com.hyd.htalker.factory.presenter.contact.FollowPresenter;
-import com.hyd.htalker.frags.search.SearchUserFragment;
-
-import net.qiujuer.genius.ui.Ui;
-import net.qiujuer.genius.ui.compat.UiCompat;
-import net.qiujuer.genius.ui.drawable.LoadingCircleDrawable;
-import net.qiujuer.genius.ui.drawable.LoadingDrawable;
+import com.hyd.htalker.factory.presenter.contact.ContactContract;
+import com.hyd.htalker.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by hydCoder on 2019/10/29.
  * 以梦为马，明日天涯。
  */
-public class ContactFragment extends BaseFragment {
+public class ContactFragment extends PresenterFragment<ContactContract.Presenter> implements ContactContract.View {
 
-    @BindView(R.id.user_rv)
-    RecyclerView userRv;
+    @BindView(R.id.contact_rv)
+    RecyclerView contactRv;
     @BindView(R.id.empty)
     EmptyView mEmptyView;
 
@@ -48,8 +40,8 @@ public class ContactFragment extends BaseFragment {
     @Override
     protected void initWidget() {
         super.initWidget();
-        userRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        userRv.setAdapter(mAdapter = new RecyclerAdapter<User>(){
+        contactRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        contactRv.setAdapter(mAdapter = new RecyclerAdapter<User>(){
 
             @Override
             protected int getItemViewType(int position, User user) {
@@ -59,17 +51,48 @@ public class ContactFragment extends BaseFragment {
 
             @Override
             protected ViewHolder<User> onCreateViewHolder(View root, int viewType) {
-                return null;
+                return new ContactFragment.ViewHolder(root);
             }
         });
+
+        mAdapter.setListener(new RecyclerAdapter.AdapterListenerImpl<User>() {
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder holder, User user) {
+                // 跳转到聊天界面
+                MessageActivity.show(getContext(), user);
+            }
+        });
+
         // 初始化占位布局
-        mEmptyView.bind(userRv);
+        mEmptyView.bind(contactRv);
         setPlaceHolderView(mEmptyView);
     }
 
     @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_contact;
+    }
+
+    @Override
+    protected void OnFirstInitData() {
+        super.OnFirstInitData();
+        // 进行一次数据加载
+        mPresenter.start();
+    }
+
+    @Override
+    protected ContactContract.Presenter initPresenter() {
+        return new ContactPresenter(this);
+    }
+
+    @Override
+    public RecyclerAdapter<User> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<User> {
@@ -83,8 +106,6 @@ public class ContactFragment extends BaseFragment {
         @BindView(R.id.txt_desc)
         TextView mDesc;
 
-        private FollowContract.Presenter mPresenter;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // 当前View和presenter绑定
@@ -94,12 +115,7 @@ public class ContactFragment extends BaseFragment {
         protected void onBind(User user) {
             mPortraitView.setUp(Glide.with(ContactFragment.this), user);
             mName.setText(user.getName());
-        }
-
-        @OnClick(R.id.im_follow)
-        void onFollowClick() {
-            // 关注的触发
-            mPresenter.follow(mData.getId());
+            mDesc.setText(user.getDesc());
         }
     }
 }

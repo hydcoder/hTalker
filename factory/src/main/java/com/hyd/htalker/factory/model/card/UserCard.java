@@ -1,5 +1,6 @@
 package com.hyd.htalker.factory.model.card;
 
+import com.hyd.common.factory.model.Author;
 import com.hyd.htalker.factory.model.db.User;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
  * Created by hydCoder on 2019/10/29.
  * 以梦为马，明日天涯。
  */
-public class UserCard {
+public class UserCard implements Author {
     private String id;
     private String name;
     private String phone;
@@ -108,7 +109,7 @@ public class UserCard {
         this.modifyAt = modifyAt;
     }
 
-    // 缓存一个对应的User, 不能被GSON框架解析使用ø
+    // 缓存一个对应的User, 不能被GSON框架解析使用
     private transient User user;
 
     public User build() {

@@ -2,7 +2,6 @@ package com.hyd.htalker.frags.search;
 
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -124,7 +123,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
 
         @Override
         protected void onBind(UserCard userCard) {
-            mPortraitView.setUp(Glide.with(SearchUserFragment.this), userCard.getPortrait());
+            mPortraitView.setUp(Glide.with(SearchUserFragment.this), userCard);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
         }

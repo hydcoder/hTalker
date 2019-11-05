@@ -1,6 +1,7 @@
 package com.hyd.htalker.factory.model.db;
 
 import com.hyd.common.factory.model.Author;
+import com.hyd.htalker.factory.model.card.UserCard;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -155,5 +156,26 @@ public class User extends BaseModel implements Author {
                 ", isFollow=" + isFollow +
                 ", modifyAt=" + modifyAt +
                 '}';
+    }
+
+    // 缓存一个对应的UserCard, 不能被GSON框架解析使用
+    private transient UserCard userCard;
+
+    public UserCard build() {
+        if (userCard == null) {
+            UserCard userCard = new UserCard();
+            userCard.setId(id);
+            userCard.setName(name);
+            userCard.setPortrait(portrait);
+            userCard.setPhone(phone);
+            userCard.setDesc(desc);
+            userCard.setSex(sex);
+            userCard.setFollow(isFollow);
+            userCard.setFollows(follows);
+            userCard.setFollowing(following);
+            userCard.setModifyAt(modifyAt);
+            this.userCard = userCard;
+        }
+        return userCard;
     }
 }

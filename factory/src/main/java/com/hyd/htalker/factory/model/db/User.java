@@ -2,19 +2,21 @@ package com.hyd.htalker.factory.model.db;
 
 import com.hyd.common.factory.model.Author;
 import com.hyd.htalker.factory.model.card.UserCard;
+import com.hyd.htalker.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by hydCoder on 2019/10/29.
  * 以梦为马，明日天涯。
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author {
+public class User extends BaseModel implements Author, DiffUiDataCallback.UiDataDiff<User> {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 
@@ -177,5 +179,18 @@ public class User extends BaseModel implements Author {
             this.userCard = userCard;
         }
         return userCard;
+    }
+
+    @Override
+    public boolean isSame(User old) {
+        return old == this || Objects.equals(id, old.id);
+    }
+
+    @Override
+    public boolean isUiContentSame(User old) {
+        return old == this || (Objects.equals(name, old.name)
+                && Objects.equals(portrait, old.portrait)
+                && Objects.equals(sex, old.sex)
+                && Objects.equals(isFollow, old.isFollow));
     }
 }

@@ -22,8 +22,7 @@ import butterknife.Unbinder;
  * Created by hydCoder on 2019/10/17.
  * 以梦为马，明日天涯。
  */
-public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder<Data>>
-        implements View.OnClickListener, View.OnLongClickListener, AdapterCallBack<Data> {
+public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder<Data>> implements View.OnClickListener, View.OnLongClickListener, AdapterCallBack<Data> {
 
     private final List<Data> mDataList;
     private AdapterListener<Data> mListener;
@@ -43,6 +42,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 复写默认的布局类型返回
+     *
      * @param position 角标
      * @return 类型，其实复写后返回的都是XML布局文件的id
      */
@@ -53,8 +53,9 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 得到的布局类型
+     *
      * @param position 角标
-     * @param data 当前item的数据
+     * @param data     当前item的数据
      * @return XML布局文件的id，用于创建ViewHolder
      */
     @LayoutRes
@@ -62,7 +63,8 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 创建一个ViewHolder
-     * @param parent RecyclerView
+     *
+     * @param parent   RecyclerView
      * @param viewType 界面的类型,约定为XML布局的Id
      * @return
      */
@@ -92,7 +94,8 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 得到一个新的ViewHolder
-     * @param root 根布局
+     *
+     * @param root     根布局
      * @param viewType 界面的类型,其实 为XML布局的Id
      * @return
      */
@@ -100,7 +103,8 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 绑定数据到holder上
-     * @param holder 要绑定的holder
+     *
+     * @param holder   要绑定的holder
      * @param position 角标
      */
     @Override
@@ -117,7 +121,17 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
     }
 
     /**
+     * 获取数据集
+     *
+     * @return List<Data>
+     */
+    public List<Data> getDataList() {
+        return mDataList;
+    }
+
+    /**
      * 插入一条数据并通知插入更新
+     *
      * @param data 插入的数据
      */
     public void add(Data data) {
@@ -127,6 +141,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 插入一堆数据并通知插入更新
+     *
      * @param dataList 插入的数据集
      */
     public void add(Data... dataList) {
@@ -147,12 +162,12 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 替换为一个新的集合，其中包括了清空
+     *
      * @param dataList 一个新的集合
      */
     public void replaceData(Collection<Data> dataList) {
         mDataList.clear();
-        if (dataList == null || dataList.size() == 0)
-            return;
+        if (dataList == null || dataList.size() == 0) return;
         mDataList.addAll(dataList);
         notifyDataSetChanged();
 
@@ -160,6 +175,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 插入一堆数据并通知插入更新
+     *
      * @param dataList 插入的数据集合
      */
     public void add(List<Data> dataList) {
@@ -205,6 +221,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 设置监听器
+     *
      * @param listener 实现了的监听器
      */
     public void setListener(AdapterListener<Data> listener) {
@@ -213,17 +230,20 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
     /**
      * 当前Adapter的监听器
+     *
      * @param <Data> 泛型
      */
     public interface AdapterListener<Data> {
         // 当点击的时候回调
         void onItemClick(RecyclerAdapter.ViewHolder holder, Data data);
+
         // 当长按的时候回调
         void onItemLongClick(RecyclerAdapter.ViewHolder holder, Data data);
     }
 
     /**
      * 自定义的ViewHolder
+     *
      * @param <Data> 数据泛型类型
      */
     public static abstract class ViewHolder<Data> extends RecyclerView.ViewHolder {
@@ -238,6 +258,7 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
         /**
          * 用于绑定数据的触发
+         *
          * @param data 绑定的数据
          */
         void bind(Data data) {
@@ -247,12 +268,14 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
 
         /**
          * 当触发绑定数据时候的回调，子类必须复写，实现具体绑定逻辑
+         *
          * @param data 绑定的数据
          */
         protected abstract void onBind(Data data);
 
         /**
          * holder对自己对应的数据进行更新操作
+         *
          * @param data 要更新的数据
          */
         public void updateData(Data data) {

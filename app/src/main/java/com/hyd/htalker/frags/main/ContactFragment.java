@@ -14,11 +14,13 @@ import com.hyd.common.widget.PortraitView;
 import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MessageActivity;
+import com.hyd.htalker.activities.PersonalActivity;
 import com.hyd.htalker.factory.model.db.User;
 import com.hyd.htalker.factory.presenter.contact.ContactContract;
 import com.hyd.htalker.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by hydCoder on 2019/10/29.
@@ -116,6 +118,12 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
             mPortraitView.setUp(Glide.with(ContactFragment.this), user);
             mName.setText(user.getName());
             mDesc.setText(user.getDesc());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitClick() {
+            // 进入个人信息页面
+            PersonalActivity.show(getContext(), mData.getId());
         }
     }
 }

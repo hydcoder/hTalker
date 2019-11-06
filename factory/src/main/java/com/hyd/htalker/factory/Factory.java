@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  */
 public class Factory {
 
-    // 单例模式ø
+    // 单例模式
     private static final Factory instance;
     // 全局的线程池
     private final Executor executor;

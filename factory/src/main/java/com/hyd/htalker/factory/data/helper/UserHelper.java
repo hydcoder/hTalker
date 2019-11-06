@@ -7,10 +7,12 @@ import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
 import com.hyd.htalker.factory.model.card.UserCard;
 import com.hyd.htalker.factory.model.db.User;
+import com.hyd.htalker.factory.model.db.User_Table;
 import com.hyd.htalker.factory.net.Network;
 import com.hyd.htalker.factory.net.RemoteService;
-import com.hyd.htalker.factory.presenter.contact.FollowPresenter;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -116,5 +118,88 @@ public class UserHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
+
+    // 获取联系人列表
+    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback) {
+        RemoteService service = Network.remote();
+        // 网络请求
+        service.userContacts().enqueue(new Callback<RspModel<List<UserCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                RspModel<List<UserCard>> rspModel = response.body();
+                if (rspModel != null && rspModel.success()) {
+                    List<UserCard> userCards = rspModel.getResult();
+                    callback.onDataLoaded(userCards);
+                } else {
+                    // 错误情况下进行错误分配
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+    }
+
+    /**
+     * 搜索一个用户，优先本地缓存，然后再从网络拉取
+      * @param id 用户id
+     * @return 搜索到的用户
+     */
+    public static User searchFirstOfLocal(String id) {
+        User user = findFromLocal(id);
+        if (user == null) {
+            return findFromNet(id);
+        }
+        return user;
+    }
+
+    /**
+     * 搜索一个用户，优先网络拉取，然后再从本地缓存
+     * @param id 用户id
+     * @return 搜索到的用户
+     */
+    public static User searchFirstOfNet(String id) {
+        User user = findFromNet(id);
+        if (user == null) {
+            return findFromLocal(id);
+        }
+        return user;
+    }
+
+    /**
+     * 从本地数据库查询一个用户
+     * @param id 用户id
+     * @return 搜索到的用户
+     */
+    public static User findFromLocal(String id) {
+        return SQLite.select().from(User.class).where(User_Table.id.eq(id))
+                .querySingle();
+    }
+
+    /**
+     * 从网络查询一个用户
+     * @param id 用户id
+     * @return 搜索到的用户
+     */
+    public static User findFromNet(String id) {
+        RemoteService remoteService = Network.remote();
+        try {
+            Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
+            UserCard card = response.body().getResult();
+            if (card != null) {
+                // TODO 数据库的刷新但是没有通知
+                User user = card.build();
+                user.save();
+
+                return user;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

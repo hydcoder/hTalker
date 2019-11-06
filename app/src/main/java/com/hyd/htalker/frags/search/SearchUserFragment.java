@@ -15,6 +15,7 @@ import com.hyd.common.widget.EmptyView;
 import com.hyd.common.widget.PortraitView;
 import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
+import com.hyd.htalker.activities.PersonalActivity;
 import com.hyd.htalker.activities.SearchActivity;
 import com.hyd.htalker.factory.model.card.UserCard;
 import com.hyd.htalker.factory.presenter.contact.FollowContract;
@@ -126,6 +127,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             mPortraitView.setUp(Glide.with(SearchUserFragment.this), userCard);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitClick() {
+            // 进入个人信息页面
+            PersonalActivity.show(getContext(), mData.getId());
         }
 
         @OnClick(R.id.im_follow)

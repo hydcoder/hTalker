@@ -33,7 +33,7 @@ public abstract class ToolbarActivity extends BaseActivity {
     }
 
     private void initTitleNeedBack() {
-        // 设置左上角的返回按钮为实际的范湖效果
+        // 设置左上角的返回按钮为实际的返回效果
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);

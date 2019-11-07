@@ -7,7 +7,7 @@ import androidx.annotation.StringRes;
  * Created by hydCoder on 2019/10/25.
  * 以梦为马，明日天涯。
  */
-public class DataSource {
+public interface DataSource {
     /**
      * 同时包括了成功与失败的回调接口
      *
@@ -35,4 +35,9 @@ public class DataSource {
         // 数据加载失败, 网络请求失败
         void onDataNotAvailable(@StringRes int strRes);
     }
+
+    /**
+     * 销毁操作
+     */
+    void dispose();
 }

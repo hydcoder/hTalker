@@ -1,25 +1,16 @@
 package com.hyd.htalker.factory.presenter.contact;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.hyd.common.factory.data.DataSource;
-import com.hyd.common.factory.presenter.BasePresenter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.factory.data.helper.UserHelper;
-import com.hyd.htalker.factory.model.card.UserCard;
-import com.hyd.htalker.factory.model.db.AppDatabase;
+import com.hyd.htalker.factory.data.user.ContactDataSource;
+import com.hyd.htalker.factory.data.user.ContactRepository;
 import com.hyd.htalker.factory.model.db.User;
-import com.hyd.htalker.factory.model.db.User_Table;
-import com.hyd.htalker.factory.persistence.Account;
+import com.hyd.htalker.factory.presenter.BaseSourcePresenter;
 import com.hyd.htalker.factory.utils.DiffUiDataCallback;
-import com.raizlabs.android.dbflow.config.DatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
-import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,17 +18,19 @@ import java.util.List;
  * Created by hydCoder on 2019/11/5.
  * 以梦为马，明日天涯。
  */
-public class ContactPresenter extends BasePresenter<ContactContract.View> implements ContactContract.Presenter {
+public class ContactPresenter extends BaseSourcePresenter<User, User, ContactDataSource, ContactContract.View>
+        implements ContactContract.Presenter, DataSource.SucceedCallback<List<User>> {
 
     public ContactPresenter(ContactContract.View view) {
-        super(view);
+        // 初始化数据仓库
+        super(new ContactRepository(), view);
     }
 
     @Override
     public void start() {
         super.start();
 
-        // 加载本地数据库数据
+        /*// 加载本地数据库数据
         SQLite.select()
                 .from(User.class)
                 .where(User_Table.isFollow.eq(true))
@@ -81,13 +74,19 @@ public class ContactPresenter extends BasePresenter<ContactContract.View> implem
 
                 diff(getView().getRecyclerAdapter().getDataList(), users);
             }
-        });
+        });*/
 
         // TODO 问题
         // 1、关注后虽然存储了数据库，但是没有刷新联系人；
         // 2、如果从数据库刷新数据，或者从网络刷新，最终刷新的时候还是全局刷新； 通过数据对比解决---DiffUtil
         // 3、本地数据库刷新和网络刷新，在显示添加到界面的时候会有可能冲突；导致数据显示异常
         // 4、如何识别在数据库中已经有这样的数据
+
+        // 直接从网络获取，然后存储到数据库，
+        // 并通过数据库观察者进行通知界面更新，
+        //  界面更新的时候进行对比，然后差异更新
+        // 便解决了上述的问题
+        UserHelper.refreshContacts();
     }
 
     private void diff(List<User> oldList, List<User> newList) {
@@ -102,5 +101,24 @@ public class ContactPresenter extends BasePresenter<ContactContract.View> implem
         diffResult.dispatchUpdatesTo(getView().getRecyclerAdapter());
 
         getView().onAdapterDataChanged();
+    }
+
+    // 运行到这里的时候是子线程
+    @Override
+    public void onDataLoaded(List<User> users) {
+        // 无论怎么操作，数据变更，最终都会通知到这里来
+        final ContactContract.View view = getView();
+        if (view == null)
+            return;
+
+        RecyclerAdapter<User> adapter = view.getRecyclerAdapter();
+        List<User> old = adapter.getDataList();
+
+        // 进行数据对比
+        DiffUtil.Callback callback = new DiffUiDataCallback<>(old, users);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
+
+        // 调用基类方法进行界面刷新
+        refreshData(result, users);
     }
 }

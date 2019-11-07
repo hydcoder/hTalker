@@ -6,6 +6,7 @@ import com.hyd.htalker.factory.model.db.User;
 import java.util.Date;
 
 /**
+ * 用户卡片，用于接收服务器返回
  * Created by hydCoder on 2019/10/29.
  * 以梦为马，明日天涯。
  */

@@ -2,11 +2,9 @@ package com.hyd.htalker.factory.model.db;
 
 import com.hyd.common.factory.model.Author;
 import com.hyd.htalker.factory.model.card.UserCard;
-import com.hyd.htalker.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.Date;
 import java.util.Objects;
@@ -16,7 +14,7 @@ import java.util.Objects;
  * 以梦为马，明日天涯。
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel implements Author, DiffUiDataCallback.UiDataDiff<User> {
+public class User extends BaseDbModel<User> implements Author {
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 

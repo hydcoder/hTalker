@@ -198,9 +198,9 @@ public class Factory {
         if (model == null)
             return;
 
-        Log.e(TAG, model.toString());
         // 对推送集合进行遍历
         for (PushModel.Entity entity : model.getEntities()) {
+            Log.e(TAG, "dispatchPush-Entity: " + entity.toString());
             switch (entity.type) {
                 case PushModel.ENTITY_TYPE_LOGOUT:
                     instance.logout();

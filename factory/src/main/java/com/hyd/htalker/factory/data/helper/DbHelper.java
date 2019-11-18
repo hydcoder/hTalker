@@ -72,7 +72,7 @@ public class DbHelper {
         if (changedListeners == null) {
             // 初始化某一类型的容器
             changedListeners = new HashSet<>();
-            // 添加到中的Map
+            // 添加到总的Map
             instance.changedListeners.put(tClass, changedListeners);
         }
         changedListeners.add(listener);
@@ -161,6 +161,7 @@ public class DbHelper {
      * @param models  通知的Model数组
      * @param <Model> 这个实例的范型，限定条件是BaseModel
      */
+    @SuppressWarnings("unchecked")
     private final <Model extends BaseModel> void notifySave(final Class<Model> tClass,
                                                             final Model... models) {
         // 找监听器
@@ -278,6 +279,9 @@ public class DbHelper {
                     // 数据存储
                     adapter.save(session);
                     // 添加到集合
+
+
+
                     sessions[index++] = session;
                 }
 

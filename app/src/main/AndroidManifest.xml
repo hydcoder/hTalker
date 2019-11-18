@@ -19,10 +19,6 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme"
 		tools:ignore="GoogleAppIndexingWarning">
-		<activity
-			android:name=".activities.MessageActivity"
-			android:label="@string/title_activity_message"
-			android:theme="@style/AppTheme.NoActionBar"></activity>
 		<!-- 个推的广播注册 -->
 		<receiver
 			android:name=".MessageReceiver"
@@ -70,6 +66,11 @@
 			android:label="@string/title_activity_personal"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme.TransStatusBar" />
+		<activity
+			android:name=".activities.MessageActivity"
+			android:label="@string/title_activity_message"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme.Message" />
 	</application>
 
 </manifest>

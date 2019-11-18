@@ -96,9 +96,9 @@ public abstract class BaseDbRepository<Data extends BaseDbModel<Data>> implement
         }
 
         // 转变为数组
-        Data[] users = CollectionUtil.toArray(tResult, dataClass);
+        Data[] dataArr = CollectionUtil.toArray(tResult, dataClass);
         // 回到数据集更新的操作中
-        onDataSave(users);
+        onDataSave(dataArr);
     }
 
     // 插入或者更新

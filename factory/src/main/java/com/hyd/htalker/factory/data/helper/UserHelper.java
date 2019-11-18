@@ -105,8 +105,6 @@ public class UserHelper {
                     // 保存到本地数据库
                     // 唤起进行保存的操作
                     Factory.getUserCenter().dispatch(userCard);
-                    // TODO 通知联系人列表刷新
-
                     // 返回数据
                     callback.onDataLoaded(userCard);
                 } else {

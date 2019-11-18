@@ -69,9 +69,9 @@ public class MessageDispatcher implements MessageCenter {
                         && TextUtils.isEmpty(card.getGroupId())))
                     continue;
 
-                // 消息卡片有可能是推送过来的，也有可能是直接造的
+                // 消息卡片有可能是推送过来的，也有可能是自己造的
                 // 推送来的代表服务器一定有，我们可以查询到（本地有可能有，有可能没有）
-                // 如果是直接造的，那么先存储本地，后发送网络
+                // 如果是自己造的，那么先存储本地，后发送网络
                 // 发送消息流程：写消息->存储本地->发送网络->网络返回->刷新本地状态
                 Message message = MessageHelper.findFromLocal(card.getId());
                 if (message != null) {
@@ -90,7 +90,7 @@ public class MessageDispatcher implements MessageCenter {
                         message.setCreateAt(card.getCreateAt());
 
                         // 如果没有进入判断，则代表这个消息是发送失败了，
-                        // 重新进行数据库更新而而已
+                        // 重新进行数据库更新而已
                     }
 
                     // 更新一些会变化的内容

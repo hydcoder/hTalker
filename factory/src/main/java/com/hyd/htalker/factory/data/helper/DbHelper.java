@@ -279,9 +279,6 @@ public class DbHelper {
                     // 数据存储
                     adapter.save(session);
                     // 添加到集合
-
-
-
                     sessions[index++] = session;
                 }
 

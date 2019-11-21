@@ -52,9 +52,12 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View> impl
         Run.onUiAsync(new Action() {
             @Override
             public void call() {
-                 view.onLoadDone(user);
-                 view.allowSayHello(allowSayFollow);
-                 view.setFollowStatus(isFollow);
+                if (view == null) {
+                    return;
+                }
+                view.onLoadDone(user);
+                view.allowSayHello(allowSayFollow);
+                view.setFollowStatus(isFollow);
             }
         });
 

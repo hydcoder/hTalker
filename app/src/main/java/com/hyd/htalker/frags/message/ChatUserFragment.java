@@ -1,15 +1,24 @@
 package com.hyd.htalker.frags.message;
 
 
+import android.graphics.drawable.Drawable;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.appbar.AppBarLayout;
 import com.hyd.common.widget.PortraitView;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.PersonalActivity;
+import com.hyd.htalker.factory.model.db.User;
+import com.hyd.htalker.factory.presenter.message.ChatContract;
+import com.hyd.htalker.factory.presenter.message.ChatUserPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,7 +29,7 @@ import butterknife.OnClick;
  * Created by hydCoder on 2019/11/18.
  * 以梦为马，明日天涯。
  */
-public class ChatUserFragment extends ChatFragment {
+public class ChatUserFragment extends ChatFragment<User> implements ChatContract.UserView {
 
     @BindView(R.id.im_portrait)
     PortraitView mPortrait;
@@ -49,6 +58,21 @@ public class ChatUserFragment extends ChatFragment {
         });
 
         mUserInfoMenuItem = toolbar.getMenu().findItem(R.id.action_person);
+    }
+
+    @Override
+    protected void initWidget() {
+        super.initWidget();
+
+        Glide.with(this).load(R.drawable.default_banner_chat)
+                .centerCrop()
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<
+                            ? super Drawable> transition) {
+                        mCollapsingToolbarLayout.setContentScrim(resource.getCurrent());
+                    }
+                });
     }
 
     // 进行高度的综合运算，透明头像和menu icon
@@ -105,5 +129,18 @@ public class ChatUserFragment extends ChatFragment {
     @OnClick(R.id.im_portrait)
     void onPortraitClick() {
         PersonalActivity.show(getContext(), mReceiverId);
+    }
+
+    @Override
+    protected ChatContract.Presenter initPresenter() {
+        // 初始化presenter
+        return new ChatUserPresenter(this, mReceiverId);
+    }
+
+    @Override
+    public void onInit(User user) {
+        // 对和你聊天的朋友的信息进行初始化操作
+        mPortrait.setUp(Glide.with(ChatUserFragment.this), user.getPortrait());
+        mCollapsingToolbarLayout.setTitle(user.getName());
     }
 }

@@ -4,7 +4,9 @@ import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.account.AccountRspModel;
 import com.hyd.htalker.factory.model.api.account.LoginModel;
 import com.hyd.htalker.factory.model.api.account.RegisterModel;
+import com.hyd.htalker.factory.model.api.message.MsgCreateModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
+import com.hyd.htalker.factory.model.card.MessageCard;
 import com.hyd.htalker.factory.model.card.UserCard;
 
 import java.util.List;
@@ -68,4 +70,8 @@ public interface RemoteService {
     // 获取某个用户的信息
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userFind(@Path("userId") String userId);
+
+    // 发送消息
+    @POST("msg")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
 }

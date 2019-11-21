@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingTop="@dimen/len_4"
+	android:paddingBottom="@dimen/len_4"
+	android:paddingStart="@dimen/len_16"
+	android:paddingEnd="@dimen/len_56">
+
+	<FrameLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/len_20"
+		android:minHeight="@dimen/portraitSize"
+		android:paddingTop="@dimen/len_8"
+		android:paddingBottom="@dimen/len_8"
+		android:paddingEnd="@dimen/len_8"
+		android:paddingStart="@dimen/len_28"
+		android:layout_gravity="start"
+		android:background="@drawable/cell_chat_bg">
+
+		<TextView
+			android:id="@+id/txt_content"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+			android:gravity="center_vertical"
+			android:minHeight="@dimen/len_24"
+			android:textColor="@color/colorPrimary"
+			tools:text="@string/app_name"/>
+
+	</FrameLayout>
+
+	<com.hyd.common.widget.PortraitView
+		android:id="@+id/im_portrait"
+		android:layout_width="@dimen/portraitSize"
+		android:layout_height="@dimen/portraitSize"
+		android:layout_gravity="start"
+		android:src="@drawable/default_portrait"
+		android:padding="1px"
+		app:civ_border_color="@color/white"
+		app:civ_border_width="@dimen/len_2"/>
+
+	<net.qiujuer.genius.ui.widget.Loading
+		android:id="@+id/loading"
+		android:layout_width="@dimen/portraitSize"
+		android:layout_height="@dimen/portraitSize"
+		android:layout_gravity="start"
+		android:padding="1px"
+		app:gAutoRun="false"
+		app:gBackgroundColor="@null"
+		app:gForegroundColor="@color/colorAccent"
+		app:gForegroundLineSize="1dp"
+		app:gProgressFloat="1"/>
+
+</FrameLayout>

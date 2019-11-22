@@ -1,7 +1,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/session_rv"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@drawable/bg_main_recycler"
+		android:paddingTop="@dimen/len_2"
+		android:paddingBottom="@dimen/len_2"
+		android:clipToPadding="false"
+		android:visibility="gone"
+		android:elevation="1dp"
+		android:outlineProvider="bounds"
+		tools:targetApi="LOLLIPOP"/>
+
+	<com.hyd.common.widget.EmptyView
+		android:id="@+id/empty"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
 
 
 </FrameLayout>

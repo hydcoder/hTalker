@@ -162,4 +162,10 @@ public class LaunchActivity extends BaseActivity {
             return object.mBgDrawable.getColor();
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reallySkip();
+    }
 }

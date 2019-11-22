@@ -8,6 +8,7 @@ import com.hyd.htalker.factory.model.db.Message;
 import com.hyd.htalker.factory.model.db.Message_Table;
 import com.hyd.htalker.factory.net.Network;
 import com.hyd.htalker.factory.net.RemoteService;
+import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import retrofit2.Call;
@@ -22,10 +23,7 @@ import retrofit2.Response;
 public class MessageHelper {
     // 从本地找消息
     public static Message findFromLocal(String id) {
-        return SQLite.select()
-                .from(Message.class)
-                .where(Message_Table.id.eq(id))
-                .querySingle();
+        return SQLite.select().from(Message.class).where(Message_Table.id.eq(id)).querySingle();
     }
 
     public static void push(final MsgCreateModel model) {
@@ -49,7 +47,8 @@ public class MessageHelper {
                 RemoteService service = Network.remote();
                 service.msgPush(model).enqueue(new Callback<RspModel<MessageCard>>() {
                     @Override
-                    public void onResponse(Call<RspModel<MessageCard>> call, Response<RspModel<MessageCard>> response) {
+                    public void onResponse(Call<RspModel<MessageCard>> call,
+                                           Response<RspModel<MessageCard>> response) {
                         RspModel<MessageCard> rspModel = response.body();
                         if (rspModel != null && rspModel.success()) {
                             MessageCard rspCard = rspModel.getResult();
@@ -63,7 +62,7 @@ public class MessageHelper {
                             // 走失败流程
                             onFailure(call, null);
                         }
-                     }
+                    }
 
                     @Override
                     public void onFailure(Call<RspModel<MessageCard>> call, Throwable t) {
@@ -73,5 +72,32 @@ public class MessageHelper {
                 });
             }
         });
+    }
+
+    /**
+     * 查询一个消息，这个消息是一个群中聊天的最后一条消息
+     *
+     * @param groupId 群id
+     * @return 群中聊天的最后一条消息
+     */
+    public static Message findLastWithGroup(String groupId) {
+        return SQLite.select().from(Message.class).where(Message_Table.group_id.eq(groupId)).orderBy(Message_Table.createAt, false) // 倒序
+                .querySingle();
+    }
+
+    /**
+     * 查询一个消息，这个消息是一个单聊的最后一条消息
+     *
+     * @param userId 用户id
+     * @return 单聊的最后一条消息
+     */
+    public static Message findLastWithUser(String userId) {
+        return SQLite.select().from(Message.class)
+                .where(OperatorGroup.clause()
+                        .and(Message_Table.sender_id.eq(userId))
+                        .and(Message_Table.group_id.isNull()))
+                .or(Message_Table.receiver_id.eq(userId))
+                .orderBy(Message_Table.createAt, false)
+                .querySingle();
     }
 }

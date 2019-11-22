@@ -10,6 +10,8 @@ import com.hyd.common.app.BaseFragment;
 import com.hyd.common.factory.model.Author;
 import com.hyd.htalker.R;
 import com.hyd.htalker.factory.model.db.Group;
+import com.hyd.htalker.factory.model.db.Message;
+import com.hyd.htalker.factory.model.db.Session;
 import com.hyd.htalker.frags.message.ChatGroupFragment;
 import com.hyd.htalker.frags.message.ChatUserFragment;
 
@@ -21,6 +23,23 @@ public class MessageActivity extends BaseActivity {
 
     private String mReceiverId;
     private boolean mIsGroup;
+
+    /**
+     * 从会话列表发起一个聊天
+     *
+     * @param context 上下文
+     * @param session  session
+     */
+    public static void show(Context context, Session session) {
+        if (session == null || context == null || TextUtils.isEmpty(session.getId())) {
+            return;
+        }
+
+        Intent intent = new Intent(context, MessageActivity.class);
+        intent.putExtra(KEY_RECEIVER_ID, session.getId());
+        intent.putExtra(KEY_RECEIVER_GROUP, session.getReceiverType() == Message.RECEIVER_TYPE_GROUP);
+        context.startActivity(intent);
+    }
 
     /**
      * 显示人的聊天界面

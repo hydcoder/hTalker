@@ -36,8 +36,9 @@ public class MessageRepository extends BaseDbRepository<Message> implements Mess
 
         SQLite.select()
                 .from(Message.class)
-                .where(OperatorGroup.clause().and(Message_Table.sender_id.eq(receiverId))
-                .and(Message_Table.group_id.isNull()))
+                .where(OperatorGroup.clause()
+                        .and(Message_Table.sender_id.eq(receiverId))
+                        .and(Message_Table.group_id.isNull()))
                 .or(Message_Table.receiver_id.eq(receiverId))
                 .orderBy(Message_Table.createAt, false)  // 倒序
                 .limit(50)

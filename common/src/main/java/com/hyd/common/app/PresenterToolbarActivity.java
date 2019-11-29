@@ -1,6 +1,10 @@
 package com.hyd.common.app;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+
 import com.hyd.common.factory.presenter.BaseContract;
+import com.hyd.htalker.common.R;
 
 /**
  * Created by hydCoder on 2019/11/1.
@@ -9,6 +13,7 @@ import com.hyd.common.factory.presenter.BaseContract;
 public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Presenter> extends ToolbarActivity implements BaseContract.View<Presenter> {
 
     protected Presenter mPresenter;
+    protected ProgressDialog mLoadingDialog;
 
     @Override
     protected void initBefore() {
@@ -26,6 +31,8 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Pr
 
     @Override
     public void showError(int str) {
+        hideLoadingDialog();
+
         // 显示错误
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerError(str);
@@ -38,10 +45,35 @@ public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Pr
     public void showLoading() {
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerLoading();
+        } else {
+            if (mLoadingDialog == null) {
+                mLoadingDialog = new ProgressDialog(this, R.style.AppTheme_Dialog_Alert_Light);
+                // 不可触摸取消
+                mLoadingDialog.setCanceledOnTouchOutside(false);
+                // 如果强制取消就关闭当前界面
+                mLoadingDialog.setCancelable(true);
+                mLoadingDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                });
+            }
+            mLoadingDialog.setMessage(getText(R.string.prompt_loading));
+            mLoadingDialog.show();
+        }
+    }
+
+    protected void hideLoadingDialog() {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
+            mLoadingDialog = null;
         }
     }
 
     public void hideLoading() {
+        hideLoadingDialog();
+
         if (mPlaceHolderView != null) {
             mPlaceHolderView.triggerOk();
         }

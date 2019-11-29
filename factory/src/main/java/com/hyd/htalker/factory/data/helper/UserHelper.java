@@ -7,9 +7,11 @@ import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
 import com.hyd.htalker.factory.model.card.UserCard;
 import com.hyd.htalker.factory.model.db.User;
+import com.hyd.htalker.factory.model.db.UserSimpleModel;
 import com.hyd.htalker.factory.model.db.User_Table;
 import com.hyd.htalker.factory.net.Network;
 import com.hyd.htalker.factory.net.RemoteService;
+import com.hyd.htalker.factory.persistence.Account;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
@@ -198,7 +200,6 @@ public class UserHelper {
             Response<RspModel<UserCard>> response = remoteService.userFind(id).execute();
             UserCard card = response.body().getResult();
             if (card != null) {
-                // TODO 数据库的刷新但是没有通知
                 User user = card.build();
                 // 数据库的存储并通知
                 Factory.getUserCenter().dispatch(card);
@@ -209,5 +210,37 @@ public class UserHelper {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 获取联系人列表
+     * @return 联系人列表
+     */
+    public static List<User> getContact() {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryList();
+    }
+
+    /**
+     * 获取简单数据的联系人列表
+     * @return 简单数据的联系人列表
+     */
+    public static List<UserSimpleModel> getSimpleContact() {
+        // "select id = ??"
+        // "select User_id = ??"
+        return SQLite.select(User_Table.id.withTable().as("id")
+        , User_Table.name.withTable().as("name")
+        , User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryCustomList(UserSimpleModel.class);
     }
 }

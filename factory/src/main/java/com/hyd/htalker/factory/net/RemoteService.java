@@ -4,8 +4,10 @@ import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.account.AccountRspModel;
 import com.hyd.htalker.factory.model.api.account.LoginModel;
 import com.hyd.htalker.factory.model.api.account.RegisterModel;
+import com.hyd.htalker.factory.model.api.group.GroupCreateModel;
 import com.hyd.htalker.factory.model.api.message.MsgCreateModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
+import com.hyd.htalker.factory.model.card.GroupCard;
 import com.hyd.htalker.factory.model.card.MessageCard;
 import com.hyd.htalker.factory.model.card.UserCard;
 
@@ -74,4 +76,12 @@ public interface RemoteService {
     // 发送消息
     @POST("msg")
     Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
+
+    // 创建群
+    @POST("group")
+    Call<RspModel<GroupCard>> createGroup(@Body GroupCreateModel model);
+
+    // 查找群
+    @GET("group/{groupId}")
+    Call<RspModel<GroupCard>> findGroup(@Path("groupId") String groupId);
 }

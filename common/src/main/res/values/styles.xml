@@ -1,11 +1,12 @@
 <resources>
 
     <style name="Theme.private" parent="Theme.AppCompat">
-        <!-- Customize your theme here. -->
+        <!-- 复写三个主要的色彩. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <!-- In this custom widget style -->
+
+        <!-- In this custom widget- Genius style -->
         <item name="gTextViewStyle">@style/Genius.Widget.TextView</item>
         <item name="gButtonStyle">@style/Genius.Widget.Button</item>
         <item name="gFloatActionButtonStyle">@style/Genius.Widget.FloatActionButton</item>
@@ -14,8 +15,10 @@
         <item name="gEditTextStyle">@style/Genius.Widget.EditText</item>
         <item name="gLoadingStyle">@style/Genius.Widget.Loading</item>
         <item name="gImageViewStyle">@style/Genius.Widget.ImageView</item>
+
         <!--Background-->
         <item name="android:windowBackground">@color/windowsBackground</item>
+
         <!--NoTitle-->
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -33,4 +36,9 @@
     </style>
 
     <style name="AppTheme.Base" parent="Theme.private" />
+    <style name="AppTheme.Dialog.Alert.Light" parent="Base.Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

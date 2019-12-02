@@ -3,12 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/contact_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/red_500"
-        android:text="Group" />
+        android:background="@drawable/bg_main_recycler"
+        android:paddingTop="@dimen/len_2"
+        android:paddingBottom="@dimen/len_2"
+        android:clipToPadding="false"
+        android:visibility="gone"
+        android:elevation="1dp"
+        android:outlineProvider="bounds"
+        tools:targetApi="LOLLIPOP"/>
+
+    <com.hyd.common.widget.EmptyView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

@@ -5,9 +5,11 @@ import com.hyd.htalker.factory.model.api.account.AccountRspModel;
 import com.hyd.htalker.factory.model.api.account.LoginModel;
 import com.hyd.htalker.factory.model.api.account.RegisterModel;
 import com.hyd.htalker.factory.model.api.group.GroupCreateModel;
+import com.hyd.htalker.factory.model.api.group.GroupMemberAddModel;
 import com.hyd.htalker.factory.model.api.message.MsgCreateModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
 import com.hyd.htalker.factory.model.card.GroupCard;
+import com.hyd.htalker.factory.model.card.GroupMemberCard;
 import com.hyd.htalker.factory.model.card.MessageCard;
 import com.hyd.htalker.factory.model.card.UserCard;
 
@@ -81,7 +83,24 @@ public interface RemoteService {
     @POST("group")
     Call<RspModel<GroupCard>> createGroup(@Body GroupCreateModel model);
 
-    // 查找群
+    // 拉取群信息
     @GET("group/{groupId}")
     Call<RspModel<GroupCard>> findGroup(@Path("groupId") String groupId);
+
+    // 搜索群
+    @GET("group/search/{name}")
+    Call<RspModel<List<GroupCard>>> searchGroup(@Path(value = "name", encoded = true) String name);
+
+    // 我的群列表
+    @GET("group/list/{date}")
+    Call<RspModel<List<GroupCard>>> groupList(@Path(value = "date", encoded = true) String date);
+
+    // 我的群成员列表
+    @GET("group/{groupId}/members")
+    Call<RspModel<List<GroupMemberCard>>> groupMembers(@Path("groupId") String groupId);
+
+    // 群添加成员
+    @POST("group/{groupId}/member")
+    Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Path("groupId") String groupId, @Body GroupMemberAddModel model);
 }
+

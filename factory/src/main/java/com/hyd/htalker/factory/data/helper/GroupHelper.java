@@ -6,14 +6,21 @@ import com.hyd.htalker.factory.R;
 import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.group.GroupCreateModel;
 import com.hyd.htalker.factory.model.card.GroupCard;
+import com.hyd.htalker.factory.model.card.GroupMemberCard;
 import com.hyd.htalker.factory.model.db.Group;
+import com.hyd.htalker.factory.model.db.GroupMember;
+import com.hyd.htalker.factory.model.db.GroupMember_Table;
 import com.hyd.htalker.factory.model.db.Group_Table;
+import com.hyd.htalker.factory.model.db.MemberUserModel;
 import com.hyd.htalker.factory.model.db.User;
+import com.hyd.htalker.factory.model.db.User_Table;
 import com.hyd.htalker.factory.net.Network;
 import com.hyd.htalker.factory.net.RemoteService;
+import com.raizlabs.android.dbflow.sql.language.Join;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,5 +94,103 @@ public class GroupHelper {
                 callback.onDataNotAvailable(R.string.data_network_error);
             }
         });
+    }
+
+    // 搜索群
+    public static Call searchGroup(String name, final DataSource.Callback<List<GroupCard>> callback) {
+        RemoteService service = Network.remote();
+        // 得到一个Call
+        Call<RspModel<List<GroupCard>>> call = service.searchGroup(name);
+        // 网络请求
+        call.enqueue(new Callback<RspModel<List<GroupCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+                RspModel<List<GroupCard>> rspModel = response.body();
+                if (rspModel != null && rspModel.success()) {
+                    List<GroupCard> groupCards = rspModel.getResult();
+                    callback.onDataLoaded(groupCards);
+                } else {
+                    // 错误情况下进行错误分配
+                    Factory.decodeRspCode(rspModel, callback);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
+        return call;
+    }
+
+    // 刷新我的群组列表
+    public static void refreshGroups() {
+        RemoteService service = Network.remote();
+        service.groupList("").enqueue(new Callback<RspModel<List<GroupCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupCard>>> call,
+                                   Response<RspModel<List<GroupCard>>> response) {
+                RspModel<List<GroupCard>> rspModel = response.body();
+                if (rspModel != null && rspModel.success()) {
+                    List<GroupCard> groupCards = rspModel.getResult();
+                    if (groupCards != null && !groupCards.isEmpty())
+                    Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
+                } else {
+                    // 错误情况下进行错误分配
+                    Factory.decodeRspCode(rspModel, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupCard>>> call, Throwable t) {
+            }
+        });
+    }
+
+    // 获取一个群的成员数量
+    public static long getMemberCount(String groupId) {
+        return SQLite.selectCountOf()
+                .from(GroupMember.class)
+                .where(GroupMember_Table.group_id.eq(groupId))
+                .count();
+    }
+
+    // 从网络去刷新一个群的成员信息
+    public static void refreshGroupMember(Group group) {
+        RemoteService service = Network.remote();
+        service.groupMembers(group.getId()).enqueue(new Callback<RspModel<List<GroupMemberCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupMemberCard>>> call,
+                                   Response<RspModel<List<GroupMemberCard>>> response) {
+                RspModel<List<GroupMemberCard>> rspModel = response.body();
+                if (rspModel != null && rspModel.success()) {
+                    List<GroupMemberCard> memberCards = rspModel.getResult();
+                    if (memberCards != null && !memberCards.isEmpty())
+                        Factory.getGroupCenter().dispatch(memberCards.toArray(new GroupMemberCard[0]));
+                } else {
+                    // 错误情况下进行错误分配
+                    Factory.decodeRspCode(rspModel, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupMemberCard>>> call, Throwable t) {
+            }
+        });
+    }
+
+    // 关联查询一个用户和群成员的表，返回一个MemberUserModel的集合
+    public static List<MemberUserModel> getMemberUsers(String groupId, int size) {
+        return SQLite.select(GroupMember_Table.alias.withTable().as("alias"),
+                User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(GroupMember.class)
+                .join(User.class, Join.JoinType.INNER)
+                .on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable()))
+                .where(GroupMember_Table.group_id.withTable().eq(groupId))
+                .orderBy(GroupMember_Table.user_id, true)
+                .limit(size)
+                .queryCustomList(MemberUserModel.class);
     }
 }

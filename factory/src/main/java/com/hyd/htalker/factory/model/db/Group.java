@@ -1,5 +1,6 @@
 package com.hyd.htalker.factory.model.db;
 
+import com.hyd.htalker.factory.data.helper.GroupHelper;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -7,6 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -108,15 +110,7 @@ public class Group extends BaseDbModel<Group> implements Serializable {
 
         Group group = (Group) o;
 
-        return notifyLevel == group.notifyLevel
-                && Objects.equals(id, group.id)
-                && Objects.equals(name, group.name)
-                && Objects.equals(desc, group.desc)
-                && Objects.equals(picture, group.picture)
-                && Objects.equals(joinAt, group.joinAt)
-                && Objects.equals(modifyAt, group.modifyAt)
-                && Objects.equals(owner, group.owner)
-                && Objects.equals(holder, group.holder);
+        return notifyLevel == group.notifyLevel && Objects.equals(id, group.id) && Objects.equals(name, group.name) && Objects.equals(desc, group.desc) && Objects.equals(picture, group.picture) && Objects.equals(joinAt, group.joinAt) && Objects.equals(modifyAt, group.modifyAt) && Objects.equals(owner, group.owner) && Objects.equals(holder, group.holder);
     }
 
     @Override
@@ -134,9 +128,28 @@ public class Group extends BaseDbModel<Group> implements Serializable {
     public boolean isUiContentSame(Group oldT) {
         // 如果界面显示信息有更改，只有可能是更改了：
         // 群名称，描述，图片，以及界面显示对应的Holder
-        return Objects.equals(this.name, oldT.name)
-                && Objects.equals(this.desc, oldT.desc)
-                && Objects.equals(this.picture, oldT.picture)
-                && Objects.equals(this.holder, oldT.holder);
+        return Objects.equals(this.name, oldT.name) && Objects.equals(this.desc, oldT.desc) && Objects.equals(this.picture, oldT.picture) && Objects.equals(this.holder, oldT.holder);
+    }
+
+    private long groupMemberCount = -1;
+
+    // 获取当前群的成员数量，使用内存缓存
+    public long getGroupMemberCount() {
+        if (groupMemberCount == -1) {
+            // 说明还没有初始化
+            groupMemberCount = GroupHelper.getMemberCount(id);
+        }
+        return groupMemberCount;
+    }
+
+    private List<MemberUserModel> groupLatelyGroupMembers;
+
+    // 获取当前群的成员对应的简单的用户信息，最多只加载4条
+    public List<MemberUserModel> getLatelyGroupMembers() {
+        if (groupLatelyGroupMembers == null || groupLatelyGroupMembers.size() == 0) {
+            // 加载简单的用户信息，至多加载4条
+            groupLatelyGroupMembers = GroupHelper.getMemberUsers(id, 4);
+        }
+        return groupLatelyGroupMembers;
     }
 }

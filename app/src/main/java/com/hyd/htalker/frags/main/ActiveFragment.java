@@ -57,8 +57,8 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
         sessionRv.setLayoutManager(new LinearLayoutManager(getContext()));
         sessionRv.setAdapter(mAdapter = new RecyclerAdapter<Session>(){
 

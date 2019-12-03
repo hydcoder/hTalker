@@ -1,15 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contact_rv"
+        android:id="@+id/group_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg_main_recycler"
-        android:paddingTop="@dimen/len_2"
-        android:paddingBottom="@dimen/len_2"
+        android:padding="@dimen/len_4"
         android:clipToPadding="false"
         android:visibility="gone"
         android:elevation="1dp"

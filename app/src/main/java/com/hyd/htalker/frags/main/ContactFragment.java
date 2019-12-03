@@ -40,8 +40,8 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
         contactRv.setLayoutManager(new LinearLayoutManager(getContext()));
         contactRv.setAdapter(mAdapter = new RecyclerAdapter<User>(){
 

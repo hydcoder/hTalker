@@ -56,8 +56,8 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
         userRv.setLayoutManager(new LinearLayoutManager(getContext()));
         userRv.setAdapter(mAdapter = new RecyclerAdapter<UserCard>(){
 

@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -68,8 +70,23 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected final int getContentLayoutId() {
+        return R.layout.fragment_chat_common;
+    }
+
+    @LayoutRes
+    protected abstract int getHeaderLayoutId();
+
+    @Override
+    protected void initWidget(View root) {
+
+        ViewStub viewStub = root.findViewById(R.id.view_stub_header);
+        viewStub.setLayoutResource(getHeaderLayoutId());
+        viewStub.inflate();
+
+        // 替换viewStub布局一定要在super()之前
+        // 因为butterKnife绑定控件是在super.initWidget()中完成的
+        super.initWidget(root);
 
         initToolBar();
         initAppBar();

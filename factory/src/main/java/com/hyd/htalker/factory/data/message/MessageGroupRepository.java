@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.hyd.htalker.factory.data.BaseDbRepository;
 import com.hyd.htalker.factory.model.db.Message;
 import com.hyd.htalker.factory.model.db.Message_Table;
-import com.raizlabs.android.dbflow.sql.language.OperatorGroup;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
@@ -14,18 +13,18 @@ import java.util.List;
 
 
 /**
- * 跟某人聊天时候的聊天内容列表
- * 关注的内容一定是一定是我发送给他的，或者是他发送给我的
+ * 跟群聊天时候的聊天内容列表
+ * 关注的内容一定是一定是我发送群的，或者是别人发送给群的
  * <p>
  * Created by hydCoder on 2019/11/20.
  * 以梦为马，明日天涯。
  */
-public class MessageRepository extends BaseDbRepository<Message> implements MessageDataSource {
+public class MessageGroupRepository extends BaseDbRepository<Message> implements MessageDataSource {
 
-    // 聊天的对象id
+    // 聊天的群id
     private String receiverId;
 
-    public MessageRepository(String receiverId) {
+    public MessageGroupRepository(String receiverId) {
         super();
         this.receiverId = receiverId;
     }
@@ -36,10 +35,7 @@ public class MessageRepository extends BaseDbRepository<Message> implements Mess
 
         SQLite.select()
                 .from(Message.class)
-                .where(OperatorGroup.clause()
-                        .and(Message_Table.sender_id.eq(receiverId))
-                        .and(Message_Table.group_id.isNull()))
-                .or(Message_Table.receiver_id.eq(receiverId))
+                .where(Message_Table.group_id.eq(receiverId))
                 .orderBy(Message_Table.createAt, false)  // 倒序
                 .limit(50)
                 .async()
@@ -49,11 +45,7 @@ public class MessageRepository extends BaseDbRepository<Message> implements Mess
 
     @Override
     protected boolean isRequired(Message message) {
-        // receiverId如果是发送者，那么不是群聊的情况下一定是发送给我的消息
-        // 如果消息的接收者不为空，那么一定是发送给某个人的，这个人只能是我或者是某个人
-        // 如果这个“某个人”就是receiverId，那么就是我需要关注的信息
-        return (receiverId.equalsIgnoreCase(message.getSender().getId()) && message.getGroup() == null)
-                || (message.getReceiver() != null && receiverId.equalsIgnoreCase(message.getReceiver().getId()));
+        return false;
     }
 
     @Override

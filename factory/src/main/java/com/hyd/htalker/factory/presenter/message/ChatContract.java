@@ -2,8 +2,11 @@ package com.hyd.htalker.factory.presenter.message;
 
 import com.hyd.common.factory.presenter.BaseContract;
 import com.hyd.htalker.factory.model.db.Group;
+import com.hyd.htalker.factory.model.db.MemberUserModel;
 import com.hyd.htalker.factory.model.db.Message;
 import com.hyd.htalker.factory.model.db.User;
+
+import java.util.List;
 
 /**
  * 聊天的契约
@@ -38,6 +41,9 @@ public interface ChatContract {
 
     // 群聊的界面
     interface GroupView extends View<Group> {
+        // 是否显示管理员菜单
+        void showAdminOption(boolean isAdmin);
 
+        void onInitGroupMember(List<MemberUserModel> members, long moreCount);
     }
 }

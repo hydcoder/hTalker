@@ -50,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
         if (mRoot == null) {
             // 初始化当前的根布局，但是不在创建时就添加到container中
             mRoot = inflater.inflate(getContentLayoutId(), container, false);
-            initWidget();
+            initWidget(mRoot);
         } else {
             if (mRoot.getParent() != null) {
                 // 把当前mRoot从其父控件中移除
@@ -81,7 +81,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 初始化控件
      */
-    protected void initWidget() {
+    protected void initWidget(View root) {
         mUnbinder = ButterKnife.bind(this, mRoot);
     }
 

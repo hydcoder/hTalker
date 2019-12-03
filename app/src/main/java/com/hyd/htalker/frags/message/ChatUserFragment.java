@@ -39,10 +39,9 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     public ChatUserFragment() {
     }
 
-
     @Override
-    protected int getContentLayoutId() {
-        return R.layout.fragment_chat_user;
+    protected int getHeaderLayoutId() {
+        return R.layout.lay_chat_header_user;
     }
 
     @Override
@@ -61,8 +60,8 @@ public class ChatUserFragment extends ChatFragment<User> implements ChatContract
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initWidget(View root) {
+        super.initWidget(root);
 
         Glide.with(this).load(R.drawable.default_banner_chat)
                 .centerCrop()

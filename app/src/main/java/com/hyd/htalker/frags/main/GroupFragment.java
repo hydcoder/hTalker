@@ -27,8 +27,8 @@ import butterknife.BindView;
 public class GroupFragment extends PresenterFragment<GroupsContract.Presenter>
 implements GroupsContract.View {
 
-    @BindView(R.id.contact_rv)
-    RecyclerView contactRv;
+    @BindView(R.id.group_rv)
+    RecyclerView groupRv;
     @BindView(R.id.empty)
     EmptyView mEmptyView;
 
@@ -44,10 +44,10 @@ implements GroupsContract.View {
     }
 
     @Override
-    protected void initWidget() {
-        super.initWidget();
-        contactRv.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        contactRv.setAdapter(mAdapter = new RecyclerAdapter<Group>(){
+    protected void initWidget(View root) {
+        super.initWidget(root);
+        groupRv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        groupRv.setAdapter(mAdapter = new RecyclerAdapter<Group>(){
 
             @Override
             protected int getItemViewType(int position, Group group) {
@@ -70,7 +70,7 @@ implements GroupsContract.View {
         });
 
         // 初始化占位布局
-        mEmptyView.bind(contactRv);
+        mEmptyView.bind(groupRv);
         setPlaceHolderView(mEmptyView);
     }
 
@@ -110,7 +110,7 @@ implements GroupsContract.View {
         @BindView(R.id.txt_member)
         TextView mMember;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 

@@ -45,7 +45,9 @@ public class MessageGroupRepository extends BaseDbRepository<Message> implements
 
     @Override
     protected boolean isRequired(Message message) {
-        return false;
+        // 如果消息的group不为空，则一定是发送到群的
+        // 如果群Id等于我们需要的，那就是通过
+        return message.getGroup() != null && receiverId.equalsIgnoreCase(message.getGroup().getId());
     }
 
     @Override

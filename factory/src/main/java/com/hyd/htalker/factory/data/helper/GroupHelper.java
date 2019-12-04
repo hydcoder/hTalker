@@ -5,6 +5,7 @@ import com.hyd.htalker.factory.Factory;
 import com.hyd.htalker.factory.R;
 import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.group.GroupCreateModel;
+import com.hyd.htalker.factory.model.api.group.GroupMemberAddModel;
 import com.hyd.htalker.factory.model.card.GroupCard;
 import com.hyd.htalker.factory.model.card.GroupMemberCard;
 import com.hyd.htalker.factory.model.db.Group;
@@ -44,10 +45,7 @@ public class GroupHelper {
 
     // 本地找群信息
     public static Group findFromLocal(String groupId) {
-        return SQLite.select()
-                .from(Group.class)
-                .where(Group_Table.id.eq(groupId))
-                .querySingle();
+        return SQLite.select().from(Group.class).where(Group_Table.id.eq(groupId)).querySingle();
     }
 
     // 从网络查找群信息
@@ -71,11 +69,13 @@ public class GroupHelper {
         return null;
     }
 
-    public static void create(GroupCreateModel model, final DataSource.Callback<GroupCard> callback) {
+    public static void create(GroupCreateModel model,
+                              final DataSource.Callback<GroupCard> callback) {
         RemoteService service = Network.remote();
         service.createGroup(model).enqueue(new Callback<RspModel<GroupCard>>() {
             @Override
-            public void onResponse(Call<RspModel<GroupCard>> call, Response<RspModel<GroupCard>> response) {
+            public void onResponse(Call<RspModel<GroupCard>> call,
+                                   Response<RspModel<GroupCard>> response) {
                 RspModel<GroupCard> rspModel = response.body();
                 if (rspModel != null && rspModel.success()) {
                     GroupCard groupCard = rspModel.getResult();
@@ -97,14 +97,16 @@ public class GroupHelper {
     }
 
     // 搜索群
-    public static Call searchGroup(String name, final DataSource.Callback<List<GroupCard>> callback) {
+    public static Call searchGroup(String name,
+                                   final DataSource.Callback<List<GroupCard>> callback) {
         RemoteService service = Network.remote();
         // 得到一个Call
         Call<RspModel<List<GroupCard>>> call = service.searchGroup(name);
         // 网络请求
         call.enqueue(new Callback<RspModel<List<GroupCard>>>() {
             @Override
-            public void onResponse(Call<RspModel<List<GroupCard>>> call, Response<RspModel<List<GroupCard>>> response) {
+            public void onResponse(Call<RspModel<List<GroupCard>>> call,
+                                   Response<RspModel<List<GroupCard>>> response) {
                 RspModel<List<GroupCard>> rspModel = response.body();
                 if (rspModel != null && rspModel.success()) {
                     List<GroupCard> groupCards = rspModel.getResult();
@@ -134,7 +136,7 @@ public class GroupHelper {
                 if (rspModel != null && rspModel.success()) {
                     List<GroupCard> groupCards = rspModel.getResult();
                     if (groupCards != null && !groupCards.isEmpty())
-                    Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
+                        Factory.getGroupCenter().dispatch(groupCards.toArray(new GroupCard[0]));
                 } else {
                     // 错误情况下进行错误分配
                     Factory.decodeRspCode(rspModel, null);
@@ -149,10 +151,7 @@ public class GroupHelper {
 
     // 获取一个群的成员数量
     public static long getMemberCount(String groupId) {
-        return SQLite.selectCountOf()
-                .from(GroupMember.class)
-                .where(GroupMember_Table.group_id.eq(groupId))
-                .count();
+        return SQLite.selectCountOf().from(GroupMember.class).where(GroupMember_Table.group_id.eq(groupId)).count();
     }
 
     // 从网络去刷新一个群的成员信息
@@ -182,15 +181,35 @@ public class GroupHelper {
     // 关联查询一个用户和群成员的表，返回一个MemberUserModel的集合
     public static List<MemberUserModel> getMemberUsers(String groupId, int size) {
         return SQLite.select(GroupMember_Table.alias.withTable().as("alias"),
-                User_Table.id.withTable().as("userId"),
-                User_Table.name.withTable().as("name"),
-                User_Table.portrait.withTable().as("portrait"))
-                .from(GroupMember.class)
-                .join(User.class, Join.JoinType.INNER)
-                .on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable()))
-                .where(GroupMember_Table.group_id.withTable().eq(groupId))
-                .orderBy(GroupMember_Table.user_id, true)
-                .limit(size)
-                .queryCustomList(MemberUserModel.class);
+                User_Table.id.withTable().as("userId"), User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait")).from(GroupMember.class).join(User.class, Join.JoinType.INNER).on(GroupMember_Table.user_id.withTable().eq(User_Table.id.withTable())).where(GroupMember_Table.group_id.withTable().eq(groupId)).orderBy(GroupMember_Table.user_id, true).limit(size).queryCustomList(MemberUserModel.class);
+    }
+
+    // 网络请求进行成员添加
+    public static void addMembers(String groupId, GroupMemberAddModel model,
+                                  final DataSource.Callback<List<GroupMemberCard>> callback) {
+        RemoteService service = Network.remote();
+        service.groupMemberAdd(groupId, model).enqueue(new Callback<RspModel<List<GroupMemberCard>>>() {
+            @Override
+            public void onResponse(Call<RspModel<List<GroupMemberCard>>> call,
+                                   Response<RspModel<List<GroupMemberCard>>> response) {
+                RspModel<List<GroupMemberCard>> rspModel = response.body();
+                if (rspModel != null && rspModel.success()) {
+                    List<GroupMemberCard> memberCards = rspModel.getResult();
+                    if (memberCards != null && memberCards.size() > 0) {
+                        // 进行调度显示
+                        Factory.getGroupCenter().dispatch(memberCards.toArray(new GroupMemberCard[0]));
+                        callback.onDataLoaded(memberCards);
+                    }
+                } else {
+                    Factory.decodeRspCode(rspModel, null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RspModel<List<GroupMemberCard>>> call, Throwable t) {
+                callback.onDataNotAvailable(R.string.data_network_error);
+            }
+        });
     }
 }

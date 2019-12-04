@@ -233,9 +233,9 @@ public class UserHelper {
     public static List<UserSimpleModel> getSimpleContact() {
         // "select id = ??"
         // "select User_id = ??"
-        return SQLite.select(User_Table.id.withTable().as("id")
-        , User_Table.name.withTable().as("name")
-        , User_Table.portrait.withTable().as("portrait"))
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
                 .from(User.class)
                 .where(User_Table.isFollow.eq(true))
                 .and(User_Table.id.notEq(Account.getUserId()))

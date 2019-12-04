@@ -17,6 +17,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.appbar.AppBarLayout;
 import com.hyd.common.widget.PortraitView;
 import com.hyd.htalker.R;
+import com.hyd.htalker.activities.GroupMemberActivity;
 import com.hyd.htalker.activities.PersonalActivity;
 import com.hyd.htalker.factory.model.db.Group;
 import com.hyd.htalker.factory.model.db.MemberUserModel;
@@ -138,9 +139,7 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
         if (moreCount > 0) {
             //noinspection MalformedFormatString
             mTxtMemberMore.setText(String.format("+%s", moreCount));
-            mTxtMemberMore.setOnClickListener(v -> {
-                // TODO
-            });
+            mTxtMemberMore.setOnClickListener(v -> GroupMemberActivity.show(getContext(), mReceiverId, false));
         } else {
             mTxtMemberMore.setVisibility(View.GONE);
         }
@@ -152,7 +151,8 @@ public class ChatGroupFragment extends ChatFragment<Group> implements ChatContra
             mToolbar.inflateMenu(R.menu.chat_group);
             mToolbar.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.action_add) {
-                    // TODO 进行群成员添加操作
+                    // 进行群成员添加操作
+                    GroupMemberActivity.show(getContext(), mReceiverId, true);
                     return true;
                 }
                 return false;

@@ -2,7 +2,7 @@ package com.hyd.htalker.factory.presenter.account;
 
 import android.text.TextUtils;
 
-import com.hyd.common.Common;
+import com.hyd.common.common.Common;
 import com.hyd.common.factory.data.DataSource;
 import com.hyd.common.factory.presenter.BasePresenter;
 import com.hyd.htalker.factory.R;

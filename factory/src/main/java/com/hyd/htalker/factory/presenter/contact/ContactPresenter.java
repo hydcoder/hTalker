@@ -3,7 +3,7 @@ package com.hyd.htalker.factory.presenter.contact;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.hyd.common.factory.data.DataSource;
-import com.hyd.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.factory.data.helper.UserHelper;
 import com.hyd.htalker.factory.data.user.ContactDataSource;
 import com.hyd.htalker.factory.data.user.ContactRepository;

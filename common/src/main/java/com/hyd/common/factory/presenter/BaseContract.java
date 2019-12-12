@@ -2,7 +2,7 @@ package com.hyd.common.factory.presenter;
 
 import androidx.annotation.StringRes;
 
-import com.hyd.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.common.widget.recycler.RecyclerAdapter;
 
 /**
  * MVP模式中公共的基本契约

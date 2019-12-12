@@ -1,5 +1,7 @@
 package com.hyd.htalker.frags.main;
 
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -9,11 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.hyd.common.app.PresenterFragment;
+import com.hyd.common.common.app.PresenterFragment;
+import com.hyd.common.common.widget.EmptyView;
+import com.hyd.common.common.widget.PortraitView;
+import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.face.Face;
 import com.hyd.common.utils.DateTimeUtil;
-import com.hyd.common.widget.EmptyView;
-import com.hyd.common.widget.PortraitView;
-import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MessageActivity;
 import com.hyd.htalker.activities.PersonalActivity;
@@ -125,7 +128,13 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         protected void onBind(Session session) {
             mPortraitView.setUp(Glide.with(ActiveFragment.this), session.getPicture());
             mName.setText(session.getTitle());
-            mContent.setText(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+
+            Spannable spannable = new SpannableString(TextUtils.isEmpty(session.getContent()) ? "" : session.getContent());
+
+            // 解析表情
+            Face.decode(mContent, spannable, (int) mContent.getTextSize());
+
+            mContent.setText(spannable);
             mTime.setText(DateTimeUtil.getSimpleDate(session.getModifyAt()));
         }
 

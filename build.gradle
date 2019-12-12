@@ -47,6 +47,7 @@ ext {
     retrofitVersion = '2.1.0'
     getuiVersion = '2.9.3.0'
     dbflowVersion = "4.2.4"
+    airpanelVersion = "1.1.0"
 }
 
 task clean(type: Delete) {

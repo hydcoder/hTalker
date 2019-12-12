@@ -11,8 +11,8 @@ import android.view.MenuItem;
 
 import androidx.appcompat.widget.SearchView;
 
-import com.hyd.common.app.BaseFragment;
-import com.hyd.common.app.ToolbarActivity;
+import com.hyd.common.common.app.BaseFragment;
+import com.hyd.common.common.app.ToolbarActivity;
 import com.hyd.htalker.R;
 import com.hyd.htalker.frags.search.SearchGroupFragment;
 import com.hyd.htalker.frags.search.SearchUserFragment;

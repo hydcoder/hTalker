@@ -2,7 +2,7 @@ package com.hyd.htalker.factory.net;
 
 import android.text.TextUtils;
 
-import com.hyd.common.Common;
+import com.hyd.common.common.Common;
 import com.hyd.htalker.factory.Factory;
 import com.hyd.htalker.factory.persistence.Account;
 

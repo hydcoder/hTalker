@@ -12,7 +12,7 @@
     android:paddingStart="@dimen/len_16"
     android:paddingTop="@dimen/len_10">
 
-    <com.hyd.common.widget.PortraitView
+    <com.hyd.common.common.widget.PortraitView
         android:id="@+id/im_portrait"
         android:layout_width="@dimen/portraitSize"
         android:layout_height="@dimen/portraitSize"

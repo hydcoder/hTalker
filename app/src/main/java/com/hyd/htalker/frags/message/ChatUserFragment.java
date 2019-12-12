@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.appbar.AppBarLayout;
-import com.hyd.common.widget.PortraitView;
+import com.hyd.common.common.widget.PortraitView;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.PersonalActivity;
 import com.hyd.htalker.factory.model.db.User;

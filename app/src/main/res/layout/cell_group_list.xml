@@ -12,7 +12,7 @@
     android:outlineProvider="background"
     tools:targetApi="lollipop">
 
-    <com.hyd.common.widget.PortraitView
+    <com.hyd.common.common.widget.PortraitView
         android:id="@+id/im_portrait"
         android:layout_width="@dimen/portraitMaxSize"
         android:layout_height="@dimen/portraitMaxSize"

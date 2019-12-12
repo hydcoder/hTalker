@@ -2,6 +2,8 @@ package com.hyd.htalker.frags.message;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
@@ -19,19 +21,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.hyd.common.app.PresenterFragment;
-import com.hyd.common.widget.PortraitView;
-import com.hyd.common.widget.adapter.TextWatcherAdapter;
-import com.hyd.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.common.app.PresenterFragment;
+import com.hyd.common.common.widget.PortraitView;
+import com.hyd.common.common.widget.adapter.TextWatcherAdapter;
+import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.face.Face;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MessageActivity;
 import com.hyd.htalker.factory.model.db.Message;
 import com.hyd.htalker.factory.model.db.User;
 import com.hyd.htalker.factory.persistence.Account;
 import com.hyd.htalker.factory.presenter.message.ChatContract;
+import com.hyd.htalker.frags.panel.PanelFragment;
 
+import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
+import net.qiujuer.widget.airpanel.AirPanel;
+import net.qiujuer.widget.airpanel.Util;
 
 import java.util.Objects;
 
@@ -43,7 +50,7 @@ import butterknife.OnClick;
  * 以梦为马，明日天涯。
  */
 public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatContract.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel> {
+        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>, PanelFragment.PanelCallback {
 
     protected String mReceiverId;
     protected Adapter mAdapter;
@@ -62,6 +69,10 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     EditText mContent;
     @BindView(R.id.btn_submit)
     ImageView mSubmit;
+
+    // 控制底部面板和软键盘过渡的boss
+    private AirPanel.Boss mAirPanelBoss;
+    private PanelFragment mPanelFragment;
 
     @Override
     protected void initArgs(Bundle bundle) {
@@ -87,6 +98,18 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
         // 替换viewStub布局一定要在super()之前
         // 因为butterKnife绑定控件是在super.initWidget()中完成的
         super.initWidget(root);
+
+        // 初始化面板操作
+        mAirPanelBoss = root.findViewById(R.id.lay_content);
+        mAirPanelBoss.setup(() -> {
+            // 请求隐藏软键盘
+            Util.hideKeyboard(mContent);
+        });
+
+        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        if (mPanelFragment != null) {
+            mPanelFragment.setUp(this);
+        }
 
         initToolBar();
         initAppBar();
@@ -131,12 +154,21 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
 
     }
 
+    @Override
+    public EditText getInputEditText() {
+        return mContent;
+    }
+
     @OnClick({R.id.btn_face, R.id.btn_record, R.id.btn_submit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_face:
+                mAirPanelBoss.openPanel();
+                mPanelFragment.showFace();
                 break;
             case R.id.btn_record:
+                mAirPanelBoss.openPanel();
+                mPanelFragment.showRecord();
                 break;
             case R.id.btn_submit:
                 if (mSubmit.isActivated()) {
@@ -152,7 +184,8 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     }
 
     private void onMoreClick() {
-        // TODO
+        mAirPanelBoss.openPanel();
+        mPanelFragment.showMore();
     }
 
     @Override
@@ -283,7 +316,12 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
         protected void onBind(Message message) {
             super.onBind(message);
 
-            mContent.setText(message.getContent());
+            Spannable spannable = new SpannableString(message.getContent());
+
+            // 解析表情
+            Face.decode(mContent, spannable, (int) Ui.dipToPx(getResources(), 20));
+
+            mContent.setText(spannable);
         }
     }
 

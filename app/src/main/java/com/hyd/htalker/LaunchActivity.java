@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.Property;
 import android.view.View;
 
-import com.hyd.common.app.BaseActivity;
+import com.hyd.common.common.app.BaseActivity;
 import com.hyd.htalker.activities.AccountActivity;
 import com.hyd.htalker.activities.MainActivity;
 import com.hyd.htalker.factory.persistence.Account;

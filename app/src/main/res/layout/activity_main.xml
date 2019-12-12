@@ -22,7 +22,7 @@
             android:paddingLeft="@dimen/len_4"
             android:paddingRight="@dimen/len_4">
 
-            <com.hyd.common.widget.PortraitView
+            <com.hyd.common.common.widget.PortraitView
                 android:id="@+id/im_portrait"
                 android:layout_width="@dimen/len_40"
                 android:layout_height="@dimen/len_40"

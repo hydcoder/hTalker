@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.hyd.common.app.PresenterFragment;
+import com.hyd.common.common.app.PresenterFragment;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MainActivity;
 import com.hyd.htalker.factory.presenter.account.LoginContract;

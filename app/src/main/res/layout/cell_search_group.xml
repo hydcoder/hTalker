@@ -14,7 +14,7 @@
 	android:paddingStart="@dimen/len_16"
 	android:paddingEnd="@dimen/len_16">
 
-	<com.hyd.common.widget.PortraitView
+	<com.hyd.common.common.widget.PortraitView
 		android:id="@+id/im_portrait"
 		android:layout_gravity="start|center_vertical"
 		android:layout_width="@dimen/portraitSize"

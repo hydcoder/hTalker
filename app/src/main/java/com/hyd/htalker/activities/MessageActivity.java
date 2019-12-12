@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.hyd.common.app.BaseActivity;
-import com.hyd.common.app.BaseFragment;
+import com.hyd.common.common.app.BaseActivity;
+import com.hyd.common.common.app.BaseFragment;
 import com.hyd.common.factory.model.Author;
 import com.hyd.htalker.R;
 import com.hyd.htalker.factory.model.db.Group;

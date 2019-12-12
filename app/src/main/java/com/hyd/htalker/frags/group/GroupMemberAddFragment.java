@@ -20,8 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.hyd.common.widget.PortraitView;
-import com.hyd.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.common.widget.PortraitView;
+import com.hyd.common.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
 import com.hyd.htalker.factory.presenter.group.GroupCreateContract;
 import com.hyd.htalker.factory.presenter.group.GroupMemberAddContract;

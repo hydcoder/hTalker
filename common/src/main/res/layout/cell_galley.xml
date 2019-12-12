@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hyd.common.widget.SquareLayout
+<com.hyd.common.common.widget.SquareLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,4 +37,4 @@
         android:visibility="gone"
         app:buttonTint="@color/cb_gallery"
         tools:visibility="visible" />
-</com.hyd.common.widget.SquareLayout>
+</com.hyd.common.common.widget.SquareLayout>

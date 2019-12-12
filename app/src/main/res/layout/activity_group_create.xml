@@ -27,7 +27,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/len_16">
 
-            <com.hyd.common.widget.PortraitView
+            <com.hyd.common.common.widget.PortraitView
                 android:id="@+id/im_portrait"
                 android:layout_width="@dimen/len_80"
                 android:layout_height="@dimen/len_80"

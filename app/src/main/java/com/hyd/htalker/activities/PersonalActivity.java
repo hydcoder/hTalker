@@ -16,8 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.bumptech.glide.Glide;
-import com.hyd.common.app.PresenterToolbarActivity;
-import com.hyd.common.widget.PortraitView;
+import com.hyd.common.common.app.PresenterToolbarActivity;
+import com.hyd.common.common.widget.PortraitView;
 import com.hyd.htalker.R;
 import com.hyd.htalker.factory.model.db.User;
 import com.hyd.htalker.factory.presenter.contact.PersonalContract;

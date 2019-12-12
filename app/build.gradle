@@ -60,5 +60,8 @@ dependencies {
     // 个推
     implementation "com.getui:sdk:$rootProject.ext.getuiVersion"
 
+    // 空气面板
+    implementation "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
+
     api project(':factory')
 }

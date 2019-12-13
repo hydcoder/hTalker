@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
@@ -17,12 +19,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.hyd.common.common.app.BaseFragment;
 import com.hyd.common.common.tools.UiTool;
+import com.hyd.common.common.widget.GalleryView;
 import com.hyd.common.common.widget.recycler.RecyclerAdapter;
 import com.hyd.common.face.Face;
 import com.hyd.htalker.R;
 
 import net.qiujuer.genius.ui.Ui;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -31,6 +35,7 @@ import java.util.List;
 public class PanelFragment extends BaseFragment {
 
     private PanelCallback mCallback;
+    private View mFacePanel, mRecordPanel, mGalleryPanel;
 
     public PanelFragment() {
         // Required empty public constructor
@@ -54,11 +59,12 @@ public class PanelFragment extends BaseFragment {
         initMore(root);
     }
 
+    // 初始化表情
     @SuppressWarnings("ConstantConditions")
     private void initFace(View root) {
-        View facePanel = root.findViewById(R.id.lay_panel_face);
+        mFacePanel = root.findViewById(R.id.lay_panel_face);
 
-        View backSpace = facePanel.findViewById(R.id.im_backspace);
+        View backSpace = mFacePanel.findViewById(R.id.im_backspace);
         backSpace.setOnClickListener(v -> {
             // 删除表情逻辑
             if (mCallback == null) {
@@ -70,8 +76,8 @@ public class PanelFragment extends BaseFragment {
             mCallback.getInputEditText().dispatchKeyEvent(event);
         });
 
-        TabLayout tabLayout = facePanel.findViewById(R.id.tab);
-        ViewPager viewPager = facePanel.findViewById(R.id.pager);
+        TabLayout tabLayout = mFacePanel.findViewById(R.id.tab);
+        ViewPager viewPager = mFacePanel.findViewById(R.id.pager);
         tabLayout.setupWithViewPager(viewPager);
 
         // 每一个表情显示大小为48dp
@@ -132,28 +138,63 @@ public class PanelFragment extends BaseFragment {
         });
     }
 
+    // 初始化语音
     private void initRecord(View root) {
 
     }
 
+    // 初始化图片
     private void initMore(View root) {
+        mGalleryPanel = root.findViewById(R.id.lay_gallery_panel);
+        GalleryView galleryView = mGalleryPanel.findViewById(R.id.view_gallery);
+        TextView selectedSize = mGalleryPanel.findViewById(R.id.txt_gallery_select_count);
 
+        galleryView.setup(LoaderManager.getInstance(this), count -> {
+            String resStr = getText(R.string.label_gallery_selected_size).toString();
+            selectedSize.setText(String.format(resStr, count));
+        });
+
+        mGalleryPanel.findViewById(R.id.btn_send).setOnClickListener(v ->
+                onGallerySendClick(galleryView, galleryView.getSelectedPath()));
+    }
+
+    // 点击发送按钮是触发，传回一个GalleryView和选中的路径
+    private void onGallerySendClick(GalleryView galleryView, String[] paths) {
+        // 通知给聊天界面发送图片
+        if (mCallback == null) {
+            return;
+        }
+        mCallback.onSendGallery(paths);
+        // 清理状态
+        galleryView.clear();
     }
 
     public void showFace() {
-
+        mFacePanel.setVisibility(View.VISIBLE);
+//        mRecordPanel.setVisibility(View.GONE);
+        mGalleryPanel.setVisibility(View.GONE);
     }
 
     public void showRecord() {
-
+        mFacePanel.setVisibility(View.GONE);
+//        mRecordPanel.setVisibility(View.VISIBLE);
+        mGalleryPanel.setVisibility(View.GONE);
     }
 
     public void showMore() {
-
+        mFacePanel.setVisibility(View.GONE);
+//        mRecordPanel.setVisibility(View.GONE);
+        mGalleryPanel.setVisibility(View.VISIBLE);
     }
 
     // 回调聊天界面的callback
     public interface PanelCallback {
         EditText getInputEditText();
+
+        // 返回需要发送的图片
+        void onSendGallery(String[] paths);
+
+        // 返回录音文件和时长
+        void onRecordDone(File file, long time);
     }
 }

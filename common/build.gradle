@@ -40,7 +40,7 @@ dependencies {
     api "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
     api "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
     implementation "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
-    implementation "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
+    api "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glideVersion"
     api "net.qiujuer.genius:kit-handler:$rootProject.ext.geniusVersion"
     implementation "com.google.code.gson:gson:$rootProject.ext.gsonVersion"

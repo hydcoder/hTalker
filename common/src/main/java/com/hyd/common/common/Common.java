@@ -16,5 +16,7 @@ public class Common {
         // 基础的网络请求地址
         String API_URL = "http://192.168.60.105:8080/hTalker/api/";
 
+        // 图片最大上传大小 860kb
+        long MAX_UPLOAD_IMAGE_LENGTH = 860 * 1024;
     }
 }

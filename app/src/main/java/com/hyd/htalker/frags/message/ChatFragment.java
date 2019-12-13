@@ -40,6 +40,7 @@ import net.qiujuer.genius.ui.widget.Loading;
 import net.qiujuer.widget.airpanel.AirPanel;
 import net.qiujuer.widget.airpanel.Util;
 
+import java.io.File;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -157,6 +158,17 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     @Override
     public EditText getInputEditText() {
         return mContent;
+    }
+
+    @Override
+    public void onSendGallery(String[] paths) {
+        // 图片选择回调
+        mPresenter.pushImages(paths);
+    }
+
+    @Override
+    public void onRecordDone(File file, long time) {
+        // TODO 录音回调
     }
 
     @OnClick({R.id.btn_face, R.id.btn_record, R.id.btn_submit})
@@ -335,9 +347,22 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
 
     // 图片消息的holder
     class PicHolder extends BaseHolder {
+        @BindView(R.id.im_image)
+        ImageView mContent;
 
         public PicHolder(@NonNull View itemView) {
             super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            String content = message.getContent();
+
+            Glide.with(ChatFragment.this)
+                    .load(content)
+                    .fitCenter()
+                    .into(mContent);
         }
     }
 }

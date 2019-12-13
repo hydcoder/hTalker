@@ -22,15 +22,15 @@
 		android:layout_gravity="start"
 		android:background="@drawable/cell_chat_bg">
 
-		<TextView
-			android:id="@+id/txt_content"
+		<ImageView
+			android:id="@+id/im_image"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-			android:gravity="center_vertical"
-			android:minHeight="@dimen/len_24"
-			android:textColor="@color/colorPrimary"
-			tools:text="@string/app_name"/>
+			android:layout_height="@dimen/len_76"
+			android:layout_gravity="center_vertical"
+			android:contentDescription="@string/app_name"
+			android:maxWidth="@dimen/len_128"
+			android:minWidth="@dimen/len_48"
+			android:scaleType="fitCenter" />
 
 	</FrameLayout>
 

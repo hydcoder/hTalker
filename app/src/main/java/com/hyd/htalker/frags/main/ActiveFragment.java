@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.hyd.common.common.app.PresenterFragment;
-import com.hyd.common.common.widget.EmptyView;
-import com.hyd.common.common.widget.PortraitView;
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.app.PresenterFragment;
+import com.hyd.common.widget.EmptyView;
+import com.hyd.common.widget.PortraitView;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.common.face.Face;
 import com.hyd.common.utils.DateTimeUtil;
 import com.hyd.htalker.R;

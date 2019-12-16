@@ -21,19 +21,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.hyd.common.common.app.PresenterFragment;
-import com.hyd.common.common.widget.PortraitView;
-import com.hyd.common.common.widget.adapter.TextWatcherAdapter;
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.app.BaseApplication;
+import com.hyd.common.app.PresenterFragment;
 import com.hyd.common.face.Face;
+import com.hyd.common.tools.AudioPlayHelper;
+import com.hyd.common.widget.PortraitView;
+import com.hyd.common.widget.adapter.TextWatcherAdapter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MessageActivity;
 import com.hyd.htalker.factory.model.db.Message;
 import com.hyd.htalker.factory.model.db.User;
 import com.hyd.htalker.factory.persistence.Account;
 import com.hyd.htalker.factory.presenter.message.ChatContract;
+import com.hyd.htalker.factory.utils.FileCache;
 import com.hyd.htalker.frags.panel.PanelFragment;
 
+import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.ui.Ui;
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
@@ -50,8 +54,7 @@ import butterknife.OnClick;
  * Created by hydCoder on 2019/11/18.
  * 以梦为马，明日天涯。
  */
-public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatContract.Presenter>
-        implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>, PanelFragment.PanelCallback {
+public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatContract.Presenter> implements AppBarLayout.OnOffsetChangedListener, ChatContract.View<InitModel>, PanelFragment.PanelCallback {
 
     protected String mReceiverId;
     protected Adapter mAdapter;
@@ -75,6 +78,9 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     private AirPanel.Boss mAirPanelBoss;
     private PanelFragment mPanelFragment;
 
+    private FileCache<AudioHolder> mAudioFileCache;
+    private AudioPlayHelper<AudioHolder> mAudioPlayer;
+
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
@@ -88,6 +94,44 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
 
     @LayoutRes
     protected abstract int getHeaderLayoutId();
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // 进入界面就初始化
+        mAudioPlayer = new AudioPlayHelper<>(new AudioPlayHelper.RecordPlayListener<AudioHolder>() {
+            @Override
+            public void onPlayStart(AudioHolder audioHolder) {
+                // 泛型的作用就在于此
+                audioHolder.onPlayStart();
+            }
+
+            @Override
+            public void onPlayStop(AudioHolder audioHolder) {
+                audioHolder.onPlayStop();
+            }
+
+            @Override
+            public void onPlayError(AudioHolder audioHolder) {
+                BaseApplication.showToast(R.string.toast_audio_play_error);
+            }
+        });
+
+        // 下载工具类
+        mAudioFileCache = new FileCache<>("audio/cache", "mp3",
+                new FileCache.CacheListener<AudioHolder>() {
+            @Override
+            public void onDownloadSucceed(AudioHolder audioHolder, File file) {
+                Run.onUiAsync(() -> mAudioPlayer.trigger(audioHolder, file.getAbsolutePath()));
+            }
+
+            @Override
+            public void onDownloadFailed(AudioHolder audioHolder) {
+                BaseApplication.showToast(R.string.toast_audio_play_error);
+            }
+        });
+    }
 
     @Override
     protected void initWidget(View root) {
@@ -107,7 +151,8 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
             Util.hideKeyboard(mContent);
         });
 
-        mPanelFragment = (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
+        mPanelFragment =
+                (PanelFragment) getChildFragmentManager().findFragmentById(R.id.frag_panel);
         if (mPanelFragment != null) {
             mPanelFragment.setUp(this);
         }
@@ -119,6 +164,18 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setListener(new RecyclerAdapter.AdapterListenerImpl<Message>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onItemClick(RecyclerAdapter.ViewHolder holder, Message message) {
+                if (message.getType() == Message.TYPE_AUDIO && holder instanceof ChatFragment.AudioHolder) {
+                    // 权限已经全局申请了
+                    mAudioFileCache.download((ChatFragment.AudioHolder) holder,
+                            message.getContent());
+                }
+
+            }
+        });
     }
 
     @Override
@@ -168,7 +225,8 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
 
     @Override
     public void onRecordDone(File file, long time) {
-        // TODO 录音回调
+        // 录音回调
+        mPresenter.pushAudio(file.getAbsolutePath(), time);
     }
 
     @OnClick({R.id.btn_face, R.id.btn_record, R.id.btn_submit})
@@ -252,6 +310,12 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
                     return new TextHolder(root);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mAudioPlayer.destroy();
     }
 
     // 基类holder
@@ -340,8 +404,45 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
     // 语音消息的holder
     class AudioHolder extends BaseHolder {
 
-        public AudioHolder(@NonNull View itemView) {
+        @BindView(R.id.txt_content)
+        TextView mContent;
+        @BindView(R.id.im_audio_track)
+        ImageView mAudioTrack;
+
+        AudioHolder(@NonNull View itemView) {
             super(itemView);
+        }
+
+        @Override
+        protected void onBind(Message message) {
+            super.onBind(message);
+            String attach = TextUtils.isEmpty(message.getAttach()) ? "0" : message.getAttach();
+            mContent.setText(formatTime(attach));
+        }
+
+        void onPlayStart() {
+            mAudioTrack.setVisibility(View.VISIBLE);
+        }
+
+        void onPlayStop() {
+            mAudioTrack.setVisibility(View.INVISIBLE);
+        }
+
+        private String formatTime(String attach) {
+            float time;
+            try {
+                // 毫秒转换成秒
+                time = Float.parseFloat(attach) / 1000f;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                time = 0;
+            }
+            // eg: 12000/1000f = 12.000
+            // 取整一位小数点  1.234 -> 1.2
+            String shortTime = String.valueOf(Math.round(time * 10) / 10f);
+            // 1.0 -> 1  1.2000 -> 1.2
+            shortTime = shortTime.replaceAll("[.]0+?$|0+?$", "");
+            return String.format("%s″", shortTime);
         }
     }
 
@@ -359,10 +460,16 @@ public abstract class ChatFragment<InitModel> extends PresenterFragment<ChatCont
             super.onBind(message);
             String content = message.getContent();
 
-            Glide.with(ChatFragment.this)
-                    .load(content)
-                    .fitCenter()
-                    .into(mContent);
+            Glide.with(ChatFragment.this).load(content).fitCenter().into(mContent);
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (mAirPanelBoss.isOpen()) {
+            mAirPanelBoss.closePanel();
+            return true;
+        }
+        return super.onBackPressed();
     }
 }

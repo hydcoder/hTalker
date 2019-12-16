@@ -13,8 +13,8 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hyd.common.common.app.BaseActivity;
-import com.hyd.common.common.app.BaseFragment;
+import com.hyd.common.app.BaseActivity;
+import com.hyd.common.app.BaseFragment;
 import com.hyd.htalker.R;
 import com.hyd.htalker.frags.user.UpdateInfoFragment;
 

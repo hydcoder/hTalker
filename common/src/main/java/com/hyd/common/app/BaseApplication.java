@@ -1,4 +1,4 @@
-package com.hyd.common.common.app;
+package com.hyd.common.app;
 
 import android.app.Application;
 import android.os.SystemClock;

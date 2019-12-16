@@ -8,7 +8,7 @@ import androidx.annotation.StringRes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.hyd.common.common.app.BaseApplication;
+import com.hyd.common.app.BaseApplication;
 import com.hyd.common.factory.data.DataSource;
 import com.hyd.htalker.factory.data.group.GroupCenter;
 import com.hyd.htalker.factory.data.group.GroupDispatcher;

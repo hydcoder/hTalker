@@ -2,7 +2,7 @@ package com.hyd.htalker.frags.panel;
 
 import android.view.View;
 
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.common.face.Face;
 import com.hyd.htalker.R;
 

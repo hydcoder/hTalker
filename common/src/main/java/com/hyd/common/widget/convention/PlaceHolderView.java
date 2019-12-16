@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget.convention;
+package com.hyd.common.widget.convention;
 
 import androidx.annotation.StringRes;
 

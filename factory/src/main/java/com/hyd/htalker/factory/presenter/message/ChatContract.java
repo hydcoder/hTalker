@@ -20,7 +20,7 @@ public interface ChatContract {
         // 发送文字
         void pushText(String content);
         // 发送语音
-        void pushAudio(String path);
+        void pushAudio(String path, long time);
         // 发送图片
         void pushImages(String[] paths);
 

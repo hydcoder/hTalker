@@ -48,6 +48,9 @@ dependencies {
     // 空气面板
     implementation "net.qiujuer.widget:airpanel:$rootProject.ext.airpanelVersion"
 
+    // Lame 录音 MP3 转码器
+    implementation "net.qiujuer.lame:lame:$rootProject.ext.lameVersion"
+
     api project(':lang')
     api project(':face-res')
 }

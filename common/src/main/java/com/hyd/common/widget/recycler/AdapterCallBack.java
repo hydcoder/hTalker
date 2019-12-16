@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget.recycler;
+package com.hyd.common.widget.recycler;
 
 /**
  * Created by hydCoder on 2019/10/17.

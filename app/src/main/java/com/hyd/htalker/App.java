@@ -1,6 +1,6 @@
 package com.hyd.htalker;
 
-import com.hyd.common.common.app.BaseApplication;
+import com.hyd.common.app.BaseApplication;
 import com.hyd.htalker.factory.Factory;
 import com.igexin.sdk.PushManager;
 

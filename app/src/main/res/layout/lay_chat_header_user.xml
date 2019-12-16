@@ -30,7 +30,7 @@
 		android:layout_height="@dimen/actionBarWithStatusBarSize"
 		android:paddingTop="@dimen/statusBarSize" />
 
-	<com.hyd.common.common.widget.PortraitView
+	<com.hyd.common.widget.PortraitView
 		android:id="@+id/im_portrait"
 		app:civ_border_color="@color/white"
 		app:civ_border_width="1dp"

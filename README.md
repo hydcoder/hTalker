@@ -29,6 +29,10 @@
 
 ![](img\group_talk.jpg)
 
+#### 语音聊天
+
+![](img\audio_talk.png)
+
 ### 开发流程
 
 - 项目搭建与基础模块准备

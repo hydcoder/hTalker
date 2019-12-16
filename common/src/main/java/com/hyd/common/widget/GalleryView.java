@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget;
+package com.hyd.common.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.htalker.common.R;
 
 import java.io.File;

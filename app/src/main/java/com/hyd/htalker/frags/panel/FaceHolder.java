@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 import com.hyd.common.face.Face;
 import com.hyd.htalker.R;
 

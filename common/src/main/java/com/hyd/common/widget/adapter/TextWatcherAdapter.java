@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget.adapter;
+package com.hyd.common.widget.adapter;
 
 import android.text.Editable;
 import android.text.TextWatcher;

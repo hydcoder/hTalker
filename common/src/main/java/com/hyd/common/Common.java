@@ -1,4 +1,4 @@
-package com.hyd.common.common;
+package com.hyd.common;
 
 /**
  * Created by hydCoder on 2019/10/25.

@@ -1,5 +1,7 @@
 package com.hyd.htalker.factory.presenter.message;
 
+import android.text.TextUtils;
+
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.hyd.htalker.factory.data.helper.MessageHelper;
@@ -44,8 +46,20 @@ public class ChatPresenter<View extends ChatContract.View> extends BaseSourcePre
     }
 
     @Override
-    public void pushAudio(String path) {
-        // TODO 发送语音
+    public void pushAudio(String path, long time) {
+        // 发送语音
+        if (TextUtils.isEmpty(path)) {
+            return;
+        }
+        // 构建一个新的消息
+        MsgCreateModel model = new MsgCreateModel.Builder()
+                .receiver(mReceiverId, mReceiverType)
+                .content(path, Message.TYPE_AUDIO)
+                .attach(String.valueOf(time))
+                .build();
+
+        // 进行网络发送
+        MessageHelper.push(model);
     }
 
     @Override

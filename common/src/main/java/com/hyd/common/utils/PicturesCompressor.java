@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
-import com.hyd.common.common.app.BaseApplication;
+import com.hyd.common.app.BaseApplication;
 
 import java.io.File;
 

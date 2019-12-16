@@ -1,4 +1,4 @@
-package com.hyd.common.common.app;
+package com.hyd.common.app;
 
 import android.os.Bundle;
 
@@ -6,7 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.hyd.common.common.widget.convention.PlaceHolderView;
+import com.hyd.common.widget.convention.PlaceHolderView;
 
 import java.util.List;
 

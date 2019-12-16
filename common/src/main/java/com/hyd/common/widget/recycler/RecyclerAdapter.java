@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget.recycler;
+package com.hyd.common.widget.recycler;
 
 import android.view.LayoutInflater;
 import android.view.View;

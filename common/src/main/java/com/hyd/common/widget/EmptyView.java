@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget;
+package com.hyd.common.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.StringRes;
 
-import com.hyd.common.common.app.BaseApplication;
-import com.hyd.common.common.widget.convention.PlaceHolderView;
+import com.hyd.common.app.BaseApplication;
+import com.hyd.common.widget.convention.PlaceHolderView;
 import com.hyd.htalker.common.R;
 
 import net.qiujuer.genius.ui.widget.Loading;

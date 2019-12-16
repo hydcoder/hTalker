@@ -5,8 +5,8 @@ import android.text.TextUtils;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
-import com.hyd.common.common.Common;
-import com.hyd.common.common.app.BaseApplication;
+import com.hyd.common.Common;
+import com.hyd.common.app.BaseApplication;
 import com.hyd.common.utils.BitmapUtil;
 import com.hyd.common.utils.PicturesCompressor;
 import com.hyd.common.utils.StreamUtil;
@@ -150,8 +150,11 @@ public class MessageHelper {
 
     // 上传语音
     private static String uploadAudio(String path) {
-        // TODO
-        return null;
+        File file = new File(path);
+        if (!file.exists() || file.length() <= 0) {
+            return null;
+        }
+        return UploadHelper.uploadAudio(path);
     }
 
     /**

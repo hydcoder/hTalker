@@ -2,7 +2,7 @@ package com.hyd.common.factory.presenter;
 
 import androidx.recyclerview.widget.DiffUtil;
 
-import com.hyd.common.common.widget.recycler.RecyclerAdapter;
+import com.hyd.common.widget.recycler.RecyclerAdapter;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;

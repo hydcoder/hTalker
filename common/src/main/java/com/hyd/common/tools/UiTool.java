@@ -1,4 +1,4 @@
-package com.hyd.common.common.tools;
+package com.hyd.common.tools;
 
 import android.app.Activity;
 import android.content.res.Resources;

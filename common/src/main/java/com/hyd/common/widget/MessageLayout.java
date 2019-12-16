@@ -1,4 +1,4 @@
-package com.hyd.common.common.widget;
+package com.hyd.common.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

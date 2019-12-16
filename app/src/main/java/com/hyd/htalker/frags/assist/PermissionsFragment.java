@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.hyd.common.common.app.BaseApplication;
+import com.hyd.common.app.BaseApplication;
 import com.hyd.htalker.R;
 import com.hyd.htalker.frags.media.GalleryFragment;
 

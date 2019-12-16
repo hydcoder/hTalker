@@ -1,4 +1,4 @@
-package com.hyd.common.common.app;
+package com.hyd.common.app;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;

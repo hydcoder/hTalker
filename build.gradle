@@ -36,7 +36,7 @@ ext {
     // 相关依赖库
     androidxVersion = "1.1.0"
     butterknifeVersion = "10.2.0"
-    geniusVersion = '2.0.0'
+    geniusVersion = '2.1.1'
     glideVersion = '4.10.0'
     circleimageviewVersion = '3.0.1'
     ucropVersion = '2.2.0'
@@ -48,6 +48,7 @@ ext {
     getuiVersion = '2.9.3.0'
     dbflowVersion = "4.2.4"
     airpanelVersion = "1.1.0"
+    lameVersion = "1.0.0"
 }
 
 task clean(type: Delete) {

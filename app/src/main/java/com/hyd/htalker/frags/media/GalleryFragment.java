@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.hyd.common.common.tools.UiTool;
-import com.hyd.common.common.widget.GalleryView;
+import com.hyd.common.tools.UiTool;
+import com.hyd.common.widget.GalleryView;
 import com.hyd.htalker.R;
 
 /**

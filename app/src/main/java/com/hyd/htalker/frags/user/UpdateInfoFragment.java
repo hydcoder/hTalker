@@ -9,9 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.hyd.common.common.app.BaseApplication;
-import com.hyd.common.common.app.PresenterFragment;
-import com.hyd.common.common.widget.PortraitView;
+import com.hyd.common.app.BaseApplication;
+import com.hyd.common.app.PresenterFragment;
+import com.hyd.common.widget.PortraitView;
 import com.hyd.htalker.R;
 import com.hyd.htalker.activities.MainActivity;
 import com.hyd.htalker.factory.presenter.user.UpdateInfoContract;

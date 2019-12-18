@@ -100,10 +100,6 @@
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme.TransStatusBar" />
 
-		<!--<activity android:name=".activities.NearbyActivity"
-			android:label="@string/title_nearby"
-			android:screenOrientation="portrait"
-			android:theme="@style/AppTheme.TransStatusBar"/>-->
 	</application>
 
 </manifest>

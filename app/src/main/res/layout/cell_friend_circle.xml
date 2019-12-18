@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/bg_main_recycler"
+	android:orientation="horizontal"
+	android:padding="@dimen/len_8">
+
+	<com.hyd.common.widget.PortraitView
+		android:id="@+id/im_portrait"
+		android:layout_width="@dimen/len_52"
+		android:layout_height="@dimen/len_52"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/default_portrait"
+		android:transitionName="@string/label_pic_intent_key" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/len_8"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/txt_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:textColor="@color/blue_400"
+			android:textSize="@dimen/font_14" />
+
+		<TextView
+			android:id="@+id/txt_content"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:ellipsize="end"
+			android:maxLines="8"
+			android:textColor="@color/black_alpha_128"
+			android:textSize="@dimen/font_14" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginTop="@dimen/len_8"
+			android:clipToPadding="false" />
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:layout_marginTop="@dimen/len_8"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<TextView
+				android:id="@+id/txt_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:gravity="center_vertical"
+				android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+				android:textColor="@color/textSecond"
+				android:textSize="@dimen/font_14"
+				tools:text="2019-12-18" />
+
+			<ImageView
+				android:id="@+id/im_fabulous"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginEnd="@dimen/len_6"
+				android:layout_toStartOf="@+id/txt_fabulous"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/ic_fabulous" />
+
+			<TextView
+				android:id="@+id/txt_fabulous"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginEnd="@dimen/len_12"
+				android:layout_toStartOf="@+id/im_comment"
+				android:gravity="center"
+				android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+				android:textColor="@color/black_alpha_176"
+				android:textSize="@dimen/font_14"
+				tools:text="122" />
+
+			<ImageView
+				android:id="@+id/im_comment"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginEnd="@dimen/len_6"
+				android:layout_toStartOf="@+id/txt_comment"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/ic_comment"
+				android:tint="@color/black_alpha_176" />
+
+			<TextView
+				android:id="@+id/txt_comment"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_centerVertical="true"
+				android:gravity="center_vertical"
+				android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+				android:textColor="@color/black_alpha_176"
+				android:textSize="@dimen/font_14"
+				tools:text="122" />
+		</RelativeLayout>
+	</LinearLayout>
+
+</LinearLayout>

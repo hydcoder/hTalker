@@ -140,6 +140,15 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
     }
 
     /**
+     * 移除一条数据
+     * @param index 角标
+     */
+    public void remove(int index) {
+        mDataList.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    /**
      * 插入一堆数据并通知插入更新
      *
      * @param dataList 插入的数据集

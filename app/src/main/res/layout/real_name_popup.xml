@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/black_alpha_48"
+	android:orientation="vertical"
+	android:paddingEnd="@dimen/len_6"
+	android:paddingStart="@dimen/len_6">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/len_10"
+		android:background="@drawable/head_share"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/txt_photograph"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:padding="10dp"
+			android:text="@string/label_photograph"
+			android:textColor="@color/red_500"
+			android:textSize="16sp" />
+
+		<View style="@style/style_line_horizontal" />
+
+		<TextView
+			android:id="@+id/txt_album"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:padding="10dp"
+			android:text="@string/label_album"
+			android:textColor="@color/red_500"
+			android:textSize="16sp" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/txt_cancel"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="10dp"
+		android:layout_marginEnd="@dimen/len_10"
+		android:layout_marginStart="@dimen/len_10"
+		android:background="@drawable/head_share"
+		android:gravity="center"
+		android:padding="10dp"
+		android:text="@string/label_cancel"
+		android:textColor="@color/blue_700"
+		android:textSize="16sp" />
+
+</LinearLayout>

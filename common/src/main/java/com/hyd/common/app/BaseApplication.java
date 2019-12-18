@@ -1,27 +1,90 @@
 package com.hyd.common.app;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hydCoder on 2019/10/25.
  * 以梦为马，明日天涯。
  */
 public class BaseApplication extends Application {
+
     private static Application instance;
+    private List<Activity> activities = new ArrayList<>();
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+                activities.add(activity);
+            }
+
+            @Override
+            public void onActivityStarted(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityPaused(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityStopped(@NonNull Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(@NonNull Activity activity,
+                                                    @NonNull Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(@NonNull Activity activity) {
+                activities.remove(activity);
+            }
+        });
+    }
+
+    /**
+     * 关闭所有的activity
+     */
+    public void finishAll() {
+        for (Activity activity : activities) {
+            activity.finish();
+        }
+        showAccountActivity(this);
+    }
+
+    protected void showAccountActivity(Context context) {
+
     }
 
     /**
@@ -67,6 +130,20 @@ public class BaseApplication extends Application {
         File path = new File(dir, SystemClock.uptimeMillis() + ".jpg");
         return path.getAbsoluteFile();
     }
+
+    /**
+     * 获取图片的临时存储文件地址
+     *
+     * @return 临时文件
+     */
+    public static File getImageTmpFile() {
+        File dir = new File(getCacheDirFile(), "image");
+        dir.mkdirs();
+        //返回当前时间戳的目录文件地址
+        File path = new File(dir, SystemClock.uptimeMillis() + ".jpg");
+        return path.getAbsoluteFile();
+    }
+
 
     /**
      * 获取声音文件的本地地址
@@ -116,5 +193,12 @@ public class BaseApplication extends Application {
      */
     public static void showToast(@StringRes int msgId) {
         showToast(instance.getString(msgId));
+    }
+
+    // 使用系统当前日期加以调整作为照片的名称
+    public static  String getPhotoFileName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
+        return dateFormat.format(date) + ".jpg";
     }
 }

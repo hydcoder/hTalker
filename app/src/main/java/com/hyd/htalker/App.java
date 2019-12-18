@@ -1,6 +1,9 @@
 package com.hyd.htalker;
 
+import android.content.Context;
+
 import com.hyd.common.app.BaseApplication;
+import com.hyd.htalker.activities.AccountActivity;
 import com.hyd.htalker.factory.Factory;
 import com.igexin.sdk.PushManager;
 
@@ -17,5 +20,11 @@ public class App extends BaseApplication {
         Factory.setup();
         // 推送进行初始化
         PushManager.getInstance().initialize(this);
+    }
+
+    @Override
+    protected void showAccountActivity(Context context) {
+        //登录界面的显示
+        AccountActivity.show(context);
     }
 }

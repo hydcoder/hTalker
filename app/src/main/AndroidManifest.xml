@@ -71,8 +71,8 @@
 			android:name=".activities.MessageActivity"
 			android:label="@string/title_activity_message"
 			android:screenOrientation="portrait"
-			android:windowSoftInputMode="adjustResize"
-			android:theme="@style/AppTheme.Message" />
+			android:theme="@style/AppTheme.Message"
+			android:windowSoftInputMode="adjustResize" />
 		<activity
 			android:name=".activities.GroupCreateActivity"
 			android:label="@string/title_activity_group_create"
@@ -82,7 +82,28 @@
 			android:name=".activities.GroupMemberActivity"
 			android:label="@string/title_member_list"
 			android:screenOrientation="portrait"
-			android:theme="@style/AppTheme.TransStatusBar"/>
+			android:theme="@style/AppTheme.TransStatusBar" />
+		<activity
+			android:name=".activities.FriendCircleActivity"
+			android:label="@string/title_friend_circle"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme.TransStatusBar" />
+		<activity
+			android:name=".activities.ReleaseFriendCircleActivity"
+			android:label="@string/title_friend_circle_release"
+			android:launchMode="singleTop"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme.TransStatusBar" />
+		<activity
+			android:name=".activities.BigPictureActivity"
+			android:label="@string/title_big_picture"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme.TransStatusBar" />
+
+		<!--<activity android:name=".activities.NearbyActivity"
+			android:label="@string/title_nearby"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme.TransStatusBar"/>-->
 	</application>
 
 </manifest>

@@ -29,6 +29,8 @@ public class PushModel {
     public static final int ENTITY_TYPE_MODIFY_GROUP_MEMBERS = 2001;
     // 群成员退出
     public static final int ENTITY_TYPE_EXIT_GROUP_MEMBERS = 3001;
+    // 朋友圈
+    public static final int ENTITY_TYPE_FRIEND_CIRCLE = 3002;
 
     private List<Entity> entities;
 

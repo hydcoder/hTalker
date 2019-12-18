@@ -4,10 +4,13 @@ import com.hyd.htalker.factory.model.api.RspModel;
 import com.hyd.htalker.factory.model.api.account.AccountRspModel;
 import com.hyd.htalker.factory.model.api.account.LoginModel;
 import com.hyd.htalker.factory.model.api.account.RegisterModel;
+import com.hyd.htalker.factory.model.api.friend.CommentModel;
+import com.hyd.htalker.factory.model.api.friend.ReleaseFriendCircleModel;
 import com.hyd.htalker.factory.model.api.group.GroupCreateModel;
 import com.hyd.htalker.factory.model.api.group.GroupMemberAddModel;
 import com.hyd.htalker.factory.model.api.message.MsgCreateModel;
 import com.hyd.htalker.factory.model.api.user.UserUpdateModel;
+import com.hyd.htalker.factory.model.card.FriendCircleCard;
 import com.hyd.htalker.factory.model.card.GroupCard;
 import com.hyd.htalker.factory.model.card.GroupMemberCard;
 import com.hyd.htalker.factory.model.card.MessageCard;
@@ -102,5 +105,22 @@ public interface RemoteService {
     // 群添加成员
     @POST("group/{groupId}/member")
     Call<RspModel<List<GroupMemberCard>>> groupMemberAdd(@Path("groupId") String groupId, @Body GroupMemberAddModel model);
+
+    //获取朋友圈的列表信息
+    @GET("friend/list")
+    Call<RspModel<List<FriendCircleCard>>> friendCircle();
+
+    //发布朋友圈
+    @POST("friend")
+    Call<RspModel<FriendCircleCard>> release(@Body ReleaseFriendCircleModel model);
+
+    //点赞
+    @POST("friend/fabulous/{friendCircleId}")
+    Call<RspModel> fabulous(@Path(value = "friendCircleId") String friendCircleId);
+
+    //评论
+    @POST("friend/comment")
+    Call<RspModel> comment(@Body CommentModel model);
+
 }
 

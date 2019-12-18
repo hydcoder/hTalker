@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hyd.common.widget.SquareLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:layout_margin="@dimen/len_2">
+
+	<ImageView
+		android:id="@+id/im_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scaleType="centerCrop"
+		android:transitionName="@string/label_big_picture" />
+</com.hyd.common.widget.SquareLayout>

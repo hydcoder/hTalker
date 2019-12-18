@@ -24,6 +24,7 @@ import com.hyd.htalker.R;
 import com.hyd.htalker.factory.persistence.Account;
 import com.hyd.htalker.frags.main.ActiveFragment;
 import com.hyd.htalker.frags.main.ContactFragment;
+import com.hyd.htalker.frags.main.DynamicFragment;
 import com.hyd.htalker.frags.main.GroupFragment;
 import com.hyd.htalker.helper.NavHelper;
 
@@ -88,9 +89,10 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
         // 初始化底部辅助工具类
         mNavHelper = new NavHelper<>(this, R.id.lay_container, getSupportFragmentManager(), this);
-        mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(ActiveFragment.class,
-                R.string.title_home)).add(R.id.action_group,
-                new NavHelper.Tab<>(GroupFragment.class, R.string.title_group)).add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact));
+        mNavHelper.add(R.id.action_home, new NavHelper.Tab<>(ActiveFragment.class, R.string.title_home))
+                .add(R.id.action_group, new NavHelper.Tab<>(GroupFragment.class, R.string.title_group))
+                .add(R.id.action_contact, new NavHelper.Tab<>(ContactFragment.class, R.string.title_contact))
+                .add(R.id.action_dynamic, new NavHelper.Tab<>(DynamicFragment.class, R.string.title_dynamic));
 
 
         // 添加对底部按钮点击的监听
@@ -176,7 +178,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         // 对浮动按钮进行隐藏与显示的动画
         float transY = 0;
         float rotation = 0;
-        if (Objects.equals(newTab.extra, R.string.title_home)) {
+        if (Objects.equals(newTab.extra, R.string.title_home) || Objects.equals(newTab.extra, R.string.title_dynamic)) {
             // 主界面时隐藏
             transY = Ui.dipToPx(getResources(), 76);
         } else {

@@ -3,6 +3,7 @@
     <string name="title_home">Active</string>
     <string name="title_group">Group</string>
     <string name="title_contact">Contact</string>
+    <string name="title_dynamic">Dynamic</string>
 
     <string name="title_search">搜索</string>
     <string name="title_search_user">搜索用户</string>
@@ -13,4 +14,9 @@
 
     <string name="title_member_list">成员</string>
     <string name="title_member_add">添加新成员</string>
+
+    <string name="title_personal_data">编辑资料</string>
+    <string name="title_friend_circle">好友圈</string>
+    <string name="title_friend_circle_release">发布</string>
+    <string name="title_big_picture">查看大图片</string>
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/colorPrimary">
+
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/actionBarWithStatusBarSize"
+		android:background="@color/colorPrimary"
+		android:paddingTop="@dimen/statusBarSize"
+		android:visibility="visible" />
+
+	<ImageView
+		android:id="@+id/im_header"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scaleType="centerInside"
+		android:layout_marginTop="@dimen/actionBarWithStatusBarSize"
+		android:contentDescription="@string/app_name"
+		android:transitionName="@string/label_big_picture" />
+</FrameLayout>

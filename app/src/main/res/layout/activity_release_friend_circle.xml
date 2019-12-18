@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<androidx.appcompat.widget.Toolbar
+		android:id="@+id/toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/actionBarWithStatusBarSize"
+		android:background="@color/colorPrimary"
+		android:gravity="center_vertical"
+		android:orientation="horizontal"
+		android:paddingTop="@dimen/statusBarSize">
+
+
+		<TextView
+			android:id="@+id/txt_release"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="right"
+			android:layout_marginEnd="@dimen/len_10"
+			android:background="@color/green_300"
+			android:paddingStart="@dimen/len_16"
+			android:paddingTop="@dimen/len_6"
+			android:paddingEnd="@dimen/len_16"
+			android:paddingBottom="@dimen/len_6"
+			android:text="@string/label_release" />
+	</androidx.appcompat.widget.Toolbar>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:orientation="vertical"
+		android:padding="@dimen/len_10">
+
+		<EditText
+			android:id="@+id/edit_moment"
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/len_80"
+			android:background="@color/white"
+			android:gravity="start"
+			android:hint="@string/label_thoughts_moment"
+			android:textColor="@color/textDark"
+			android:textColorHint="@color/black_alpha_64"
+			android:textSize="@dimen/font_14" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recycler"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@drawable/bg_main_recycler"
+			android:clipToPadding="false"
+			android:elevation="1dp"
+			android:outlineProvider="bounds"
+			android:paddingTop="@dimen/len_12"
+			android:paddingBottom="@dimen/len_12"
+			tools:targetApi="lollipop" />
+
+	</LinearLayout>
+
+
+</LinearLayout>

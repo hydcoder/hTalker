@@ -16,4 +16,10 @@
         android:icon="@drawable/ic_contact"
         android:title="@string/action_contact"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_dynamic"
+        android:icon="@drawable/ic_friend_dynamic"
+        android:title="@string/action_dynamic"
+        app:showAsAction="ifRoom" />
 </menu>

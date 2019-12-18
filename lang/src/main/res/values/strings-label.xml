@@ -46,4 +46,7 @@
     <string name="toast_audio_record_time_short_error">录音时间太短!</string>
 
     <string name="toast_download_error">下载失败!</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_photograph">拍照</string>
+    <string name="label_album">相册</string>
 </resources>

@@ -180,7 +180,7 @@ public class Factory {
      * 收到账户退出的消息需要进行账户退出重新登录
      */
     private void logout() {
-
+        // TODO
     }
 
 
@@ -240,6 +240,9 @@ public class Factory {
                 }
                 case PushModel.ENTITY_TYPE_EXIT_GROUP_MEMBERS: {
                     // TODO 成员退出的推送
+                    break;
+                }
+                case PushModel.ENTITY_TYPE_FRIEND_CIRCLE: {
                 }
 
             }

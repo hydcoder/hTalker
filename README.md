@@ -1,7 +1,7 @@
 # hTalker
  IM APP by MVP.  MVP打造IM即时通讯APP--嗨聊。
 
-[服务端代码链接]()
+[服务端代码链接](https://github.com/hydcoder/hTalkerServer)
 
 ### 界面效果流程
 

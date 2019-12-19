@@ -54,13 +54,8 @@ public class LaunchActivity extends BaseActivity {
         super.initData();
 
         // 动画进入到50%等待PushId获取到
-        startAnim(0.5f, new Runnable() {
-            @Override
-            public void run() {
-                // 检查等待状态
-                waitPushReceiverId();
-            }
-        });
+        // 检查等待状态
+        startAnim(0.5f, this::waitPushReceiverId);
     }
 
     /**
@@ -86,12 +81,7 @@ public class LaunchActivity extends BaseActivity {
 
         // 循环等待
         getWindow().getDecorView()
-                .postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        waitPushReceiverId();
-                    }
-                }, 500);
+                .postDelayed(this::waitPushReceiverId, 500);
     }
 
 
@@ -99,12 +89,7 @@ public class LaunchActivity extends BaseActivity {
      * 在跳转之前需要把剩下的50%进行完成
      */
     private void skip() {
-        startAnim(1f, new Runnable() {
-            @Override
-            public void run() {
-                reallySkip();
-            }
-        });
+        startAnim(1f, this::reallySkip);
     }
 
     /**
